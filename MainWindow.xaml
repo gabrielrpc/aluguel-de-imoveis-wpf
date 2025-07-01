@@ -1,0 +1,17 @@
+﻿<Window x:Class="aluguel_de_imoveis_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:aluguel_de_imoveis_wpf"
+        mc:Ignorable="d"
+        Title="Aluguel de Imóveis" 
+        MinHeight="645" 
+        MinWidth="875"
+        WindowStartupLocation="CenterScreen"
+        Background="White" 
+        >
+    <Grid>
+        <ContentControl x:Name="MainContent" />
+    </Grid>
+</Window>

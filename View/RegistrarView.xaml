@@ -1,0 +1,302 @@
+﻿<UserControl x:Class="aluguel_de_imoveis_wpf.View.RegistrarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:aluguel_de_imoveis_wpf.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="645" 
+             d:DesignWidth="875"
+             Background="White"
+             >
+    
+    <UserControl.Resources>
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    </UserControl.Resources>
+    
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1.25*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Effect>
+            <DropShadowEffect 
+                BlurRadius="30" 
+                ShadowDepth="1" 
+                Opacity="0.4"
+                />  
+        </Grid.Effect>
+
+        <Border 
+            Background="#6a7eee"
+            CornerRadius="10 0 0 10" 
+            ClipToBounds="True"
+            >
+
+            <Grid>
+                <StackPanel 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    >
+
+                    <TextBlock 
+                        FontWeight="Bold" 
+                        FontSize="46" 
+                        Foreground="White"
+                        TextAlignment="Center"
+                        Text="Bem Vindo(a)"
+                         />
+
+                    <TextBlock 
+                        FontWeight="Bold" 
+                        FontSize="18" 
+                        Foreground="White"
+                        TextAlignment="Center"
+                        Text="Aluguel de Imóveis"
+                    />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border 
+            Background="White" 
+            Grid.Column="1"
+            CornerRadius="0 10 10 0" 
+            ClipToBounds="True"
+            >
+            <Grid Margin="40">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel 
+                    Grid.Row="1" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Width="Auto" 
+                    MaxWidth="400"
+                    >
+                    <TextBlock 
+                        FontWeight="Bold" 
+                        FontSize="36" 
+                        Foreground="Black"
+                        TextAlignment="Center"
+                        Text="Registrar"
+                        Margin="0 0 0 20"
+                        />
+
+                    <Border
+                        Background="#80c0ff" 
+                        Margin="0 0 0 15"
+                        Opacity="0.7"
+                        CornerRadius="6"
+                        >
+                        <Grid>
+                            <TextBox 
+                                x:Name="NomeTextBox"
+                                Background="Transparent"  
+                                BorderThickness="0"
+                                Padding="12"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                TextChanged="NomeTextBox_TextChanged"
+                                /> 
+                            
+                            <TextBlock 
+                                x:Name="NomePlaceholderText"
+                                Text="Nome"
+                                Foreground="Gray"
+                                FontSize="16"
+                                VerticalAlignment="Center"
+                                Padding="12"
+                                IsHitTestVisible="False"
+                                Visibility="{Binding ElementName=NomeTextBox, 
+                                                Path=Text, 
+                                                Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Background="#80c0ff" 
+                        Margin="0 0 0 15"
+                        Opacity="0.7"
+                        CornerRadius="6"
+                        >
+                        <Grid>
+                            <TextBox 
+                                x:Name="EmailTextBox"
+                                Background="Transparent"  
+                                BorderThickness="0"
+                                Padding="12"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                TextChanged="EmailTextBox_TextChanged"
+                                />
+                            
+                            <TextBlock 
+                                x:Name="EmailPlaceholderText"
+                                Text="Email"
+                                Foreground="Gray"
+                                FontSize="16"
+                                VerticalAlignment="Center"
+                                Padding="12"
+                                IsHitTestVisible="False"
+                                Visibility="{Binding ElementName=EmailTextBox, 
+                                                Path=Text, 
+                                                Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Background="#80c0ff" 
+                        Margin="0 0 0 15"
+                        Opacity="0.7"
+                        CornerRadius="6"
+                        >
+                        <Grid>
+                            <TextBox 
+                                x:Name="CpfTextBox"
+                                Background="Transparent"  
+                                BorderThickness="0"
+                                Padding="12"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                TextChanged="CpfTextBox_TextChanged"
+                                />
+                            
+                            <TextBlock 
+                                x:Name="CpfPlaceholderText"
+                                Text="CPF"
+                                Foreground="Gray"
+                                FontSize="16"
+                                VerticalAlignment="Center"
+                                Padding="12"
+                                IsHitTestVisible="False"
+                                Visibility="{Binding ElementName=CpfTextBox, 
+                                                Path=Text, 
+                                                Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border
+Background="#80c0ff" 
+Margin="0 0 0 15"
+Opacity="0.7"
+CornerRadius="6">
+                        <Grid>
+                            <TextBox 
+        x:Name="TelefoneTextBox"
+        Background="Transparent"  
+        BorderThickness="0"
+        Padding="12"
+        VerticalAlignment="Center"
+        FontSize="16"
+        TextChanged="TelefoneTextBox_TextChanged"/>
+                            <TextBlock 
+        x:Name="TelefonePlaceholderText"
+        Text="Telefone"
+        Foreground="Gray"
+        FontSize="16"
+        VerticalAlignment="Center"
+        Padding="12"
+        IsHitTestVisible="False"
+        Visibility="{Binding ElementName=TelefoneTextBox, 
+                            Path=Text, 
+                            Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Background="#80c0ff" 
+                        Margin="0 0 0 15"
+                        Opacity="0.7"
+                        CornerRadius="6"
+                        >
+                        <Grid>
+                            <TextBox 
+                                x:Name="SenhaTextBox"
+                                Background="Transparent"  
+                                BorderThickness="0"
+                                Padding="12"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                TextChanged="SenhaTextBox_TextChanged"
+                                />
+                            <TextBlock 
+                                x:Name="SenhaPlaceholderText"
+                                Text="Senha"
+                                Foreground="Gray"
+                                FontSize="16"
+                                VerticalAlignment="Center"
+                                Padding="12"
+                                IsHitTestVisible="False"
+                                Visibility="{Binding ElementName=SenhaTextBox, 
+                                                Path=Text, 
+                                                Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border 
+                            VerticalAlignment="Top"
+                            Grid.Row="2" 
+                            Background="#6a7eee"
+                            Height="50"
+                            Width="350"
+                            CornerRadius="6"
+                            >
+                        <Button 
+                            Background="Transparent"
+                            Content="Confirmar"
+                            Foreground="White"
+                            FontSize="18"
+                            BorderThickness="0"
+                            FontWeight="Bold"
+                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="Transparent">
+                                                    <ContentPresenter 
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                    </Border>
+
+                    <TextBlock 
+                        TextAlignment="Center"
+                        Margin="0 20 0 0" 
+                        FontSize="14"
+                        >
+                            <Run 
+                                Text="Já tenho uma conta! " 
+                                />      
+                            <Hyperlink
+                                Click="OnLoginClick"
+                                Foreground="#6a7eee" 
+                                Cursor="Hand"
+                                >
+                                <Run 
+                                    Text="Logar" 
+                                    />
+                            </Hyperlink>        
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
