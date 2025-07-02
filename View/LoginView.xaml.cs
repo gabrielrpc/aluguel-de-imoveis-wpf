@@ -1,4 +1,8 @@
-﻿using System.Net.Http;
+﻿using aluguel_de_imoveis_wpf.Communication.Response;
+using aluguel_de_imoveis_wpf.Security;
+using aluguel_de_imoveis_wpf.Services;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,12 +11,11 @@ namespace aluguel_de_imoveis_wpf.View
 {
     public partial class LoginView : UserControl
     {
-        private readonly HttpClient _httpClient;
+        private readonly UsuarioService _usuarioService;
         public LoginView()
         {
             InitializeComponent();
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://your-api-url/");
+            _usuarioService = new UsuarioService();
         }
 
         private void PasswordBox_MouseDown(object sender, MouseButtonEventArgs e)
@@ -28,6 +31,22 @@ namespace aluguel_de_imoveis_wpf.View
         private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             EmailPlaceholderText.Visibility = string.IsNullOrEmpty(EmailTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private async void LoginButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var response = await _usuarioService.LoginAsync(EmailTextBox.Text, PasswordBox.Password);
+
+                TokenStorage.SaveToken(response.Token);
+
+                MessageBox.Show($"Bem-vindo, {response.Nome}!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void OnRegistrarClick(object sender, RoutedEventArgs e)

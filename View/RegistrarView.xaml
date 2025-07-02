@@ -256,6 +256,7 @@ CornerRadius="6">
                             FontWeight="Bold"
                             Cursor="Hand"
                             HorizontalAlignment="Stretch"
+                            Click="RegistrarUsuarioClick"
                             >
                             <Button.Style>
                                 <Style TargetType="Button">

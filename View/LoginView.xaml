@@ -163,6 +163,7 @@
                             FontWeight="Bold"
                             Cursor="Hand"
                             HorizontalAlignment="Stretch"
+                            Click="LoginButtonClick"
                             >
                             <Button.Style>
                                 <Style TargetType="Button">
