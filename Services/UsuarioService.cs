@@ -1,5 +1,4 @@
-﻿using aluguel_de_imoveis_wpf.Communication;
-using aluguel_de_imoveis_wpf.Communication.Request;
+﻿using aluguel_de_imoveis_wpf.Communication.Request;
 using aluguel_de_imoveis_wpf.Communication.Response;
 using aluguel_de_imoveis_wpf.Model;
 using System;
@@ -52,7 +51,7 @@ namespace aluguel_de_imoveis_wpf.Services
 
                         if (errorResponse != null && errorResponse.ContainsKey("erro"))
                         {
-                            var mensagem = string.Join(" | ", errorResponse["erro"]);
+                            var mensagem = errorResponse["erro"];
                             throw new Exception(mensagem);
                         }
 

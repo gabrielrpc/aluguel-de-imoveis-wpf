@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace aluguel_de_imoveis_wpf.Model
 {
-    class Endereco
+    public class Endereco
     {
         public string Logradouro { get; set; } = string.Empty;
         public int Numero { get; set; }

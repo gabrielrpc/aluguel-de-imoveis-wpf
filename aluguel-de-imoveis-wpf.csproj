@@ -10,14 +10,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
     <Compile Remove="ViewModel\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="ViewModel\**" />
+    <None Remove="NewFolder\**" />
     <None Remove="ViewModel\**" />
+    <Page Remove="NewFolder\**" />
     <Page Remove="ViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="View\TelefoneConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="View\Assets\imagem-unknow.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Assets\imagem-unknow.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

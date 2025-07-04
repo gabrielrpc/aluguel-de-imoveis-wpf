@@ -1,5 +1,4 @@
-﻿<UserControl 
-            x:Class="aluguel_de_imoveis_wpf.View.LoginView"
+﻿<UserControl x:Class="aluguel_de_imoveis_wpf.View.LoginView"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,28 +27,24 @@
                 />
         </Grid.Effect>
 
-        <Border 
-            Background="#6a7eee"
+        <Border Background="#6a7eee"
             CornerRadius="10 0 0 10" 
             ClipToBounds="True"
             >
 
             <Grid>
-                <StackPanel 
-                    VerticalAlignment="Center"
+                <StackPanel  VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     >
 
-                    <TextBlock 
-                        FontWeight="Bold" 
+                    <TextBlock  FontWeight="Bold" 
                         FontSize="46" 
                         Foreground="White"
                         TextAlignment="Center"
                         Text="Bem Vindo(a)"
                         />
 
-                    <TextBlock 
-                        FontWeight="Bold" 
+                    <TextBlock  FontWeight="Bold" 
                         FontSize="18" 
                         Foreground="White"
                         TextAlignment="Center"
@@ -58,8 +53,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <Border 
-            Background="White" 
+        <Border  Background="White" 
             Grid.Column="1"
             CornerRadius="0 10 10 0" 
             ClipToBounds="True"
@@ -71,38 +65,35 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <StackPanel 
-                    Grid.Row="1" 
+                <StackPanel  Grid.Row="1" 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center" 
                     Width="Auto" 
                     MaxWidth="400"
                     >
-                    <TextBlock 
-                        FontWeight="Bold" 
+                    <TextBlock  FontWeight="Bold" 
                         FontSize="36" 
                         Foreground="Black"
                         TextAlignment="Center"
                         Text="Login"
                         Margin="0 0 0 20"
                         />
-                    <Border
-                        Background="#80c0ff" 
+                    <Border Background="#80c0ff" 
                         Margin="0 0 0 15"
                         Opacity="0.7"
                         CornerRadius="6"
                         >
                         <Grid>
-                            <TextBox 
-                                x:Name="EmailTextBox"
+                            <TextBox   x:Name="EmailTextBox"
                                 Background="Transparent"  
                                 BorderThickness="0"
                                 Padding="12"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                TextChanged="EmailTextBox_TextChanged"/>
-                                                <TextBlock 
-                                x:Name="EmailPlaceholderText"
+                                TextChanged="EmailTextBox_TextChanged"
+												 />
+
+                            <TextBlock  x:Name="EmailPlaceholderText"
                                 Text="E-mail"
                                 Foreground="Gray"
                                 FontSize="16"
@@ -116,14 +107,12 @@
                         </Grid>
                     </Border>
 
-                    <Border
-                        Background="#80c0ff"
+                    <Border Background="#80c0ff"
                         Margin="0 0 0 20"
                         Opacity="0.7"
                         CornerRadius="6">
                         <Grid>
-                            <PasswordBox 
-                                x:Name="PasswordBox"
+                            <PasswordBox   x:Name="PasswordBox"
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="12"
@@ -131,8 +120,7 @@
                                 FontSize="16"
                                 PasswordChar="*"
                                 PasswordChanged="PasswordBox_PasswordChanged"/>
-                            <TextBlock 
-                                x:Name="PlaceholderText"
+                            <TextBlock   x:Name="PlaceholderText"
                                 Text="Digite sua senha"
                                 Foreground="Gray"
                                 FontSize="16"
@@ -146,14 +134,13 @@
                         </Grid>
                     </Border>
 
-                    <Border 
-                        VerticalAlignment="Top"
+                    <Border  VerticalAlignment="Top"
                         Grid.Row="2" 
                         Background="#6a7eee"
                         Height="50"
                         Width="350"
                         CornerRadius="6"
-                        >   
+                        >
                         <Button 
                             Background="Transparent"
                             Content="Logar"
@@ -164,6 +151,7 @@
                             Cursor="Hand"
                             HorizontalAlignment="Stretch"
                             Click="LoginButtonClick"
+                            IsDefault="True"
                             >
                             <Button.Style>
                                 <Style TargetType="Button">
@@ -171,8 +159,7 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="Button">
                                                 <Border Background="Transparent">
-                                                    <ContentPresenter 
-                                                HorizontalAlignment="Center"
+                                                    <ContentPresenter   HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 />
                                                 </Border>
@@ -190,18 +177,18 @@
                         Margin="0 20 0 0" 
                         FontSize="14"
                         >
-            <Run 
-                Text="Não tem uma conta? " 
-                />
-            <Hyperlink
-                Click="OnRegistrarClick"
-                Foreground="#6a7eee" 
-                Cursor="Hand"
-                >
-                <Run 
-                    Text="Registre-se aqui" 
-                    />
-            </Hyperlink>
+                        <Run 
+                            Text="Não tem uma conta? " 
+                            />
+                        <Hyperlink
+                            Click="OnRegistrarClick"
+                            Foreground="#6a7eee" 
+                            Cursor="Hand"
+                            >
+                            <Run 
+                                Text="Registre-se aqui" 
+                                />
+                        </Hyperlink>
                     </TextBlock>
                 </StackPanel>
             </Grid>

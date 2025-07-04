@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aluguel_de_imoveis_wpf.Communication
+namespace aluguel_de_imoveis_wpf.Services
 {
     public static class BaseUrl
     {

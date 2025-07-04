@@ -12,10 +12,13 @@ namespace aluguel_de_imoveis_wpf.View
     public partial class LoginView : UserControl
     {
         private readonly UsuarioService _usuarioService;
-        public LoginView()
+        private MainWindow _mainWindow;
+
+        public LoginView(MainWindow mainWindow)
         {
             InitializeComponent();
             _usuarioService = new UsuarioService();
+            _mainWindow = mainWindow;
         }
 
         private void PasswordBox_MouseDown(object sender, MouseButtonEventArgs e)
@@ -41,7 +44,7 @@ namespace aluguel_de_imoveis_wpf.View
 
                 TokenStorage.SaveToken(response.Token);
 
-                MessageBox.Show($"Bem-vindo, {response.Nome}!");
+                _mainWindow.AbrirPainel();
             }
             catch (Exception ex)
             {
@@ -51,10 +54,7 @@ namespace aluguel_de_imoveis_wpf.View
 
         private void OnRegistrarClick(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
-                mainWindow.MainContent.Content = new RegistrarView();
-            }
+            _mainWindow.AbrirRegistrar();
         }
     }
 }

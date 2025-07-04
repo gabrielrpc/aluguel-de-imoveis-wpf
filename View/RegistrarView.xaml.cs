@@ -7,11 +7,13 @@ namespace aluguel_de_imoveis_wpf.View
     public partial class RegistrarView : UserControl
     {
         private readonly UsuarioService _usuarioService;
+        private readonly MainWindow _mainWindow;
 
-        public RegistrarView()
+        public RegistrarView(MainWindow mainWindow)
         {
             InitializeComponent();
             _usuarioService = new UsuarioService();
+            _mainWindow = mainWindow;
         }
 
         private void NomeTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -80,10 +82,7 @@ namespace aluguel_de_imoveis_wpf.View
 
                 MessageBox.Show("Usuário registrado com sucesso!");
 
-                if (Application.Current.MainWindow is MainWindow mainWindow)
-                {
-                    mainWindow.MainContent.Content = new LoginView();
-                }   
+                _mainWindow.AbrirLogin();
             }
             catch (Exception ex)
             {
@@ -93,10 +92,7 @@ namespace aluguel_de_imoveis_wpf.View
 
         private void OnLoginClick(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
-                mainWindow.MainContent.Content = new LoginView();
-            }
+            _mainWindow.AbrirLogin();
         }
     }
 }

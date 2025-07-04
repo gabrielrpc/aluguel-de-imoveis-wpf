@@ -1,0 +1,217 @@
+﻿<UserControl x:Class="aluguel_de_imoveis_wpf.View.PainelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:aluguel_de_imoveis_wpf.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="645" 
+             d:DesignWidth="875"
+             Background="#6a7eee">
+
+    <UserControl.Resources>
+        <Style x:Key="LeftTabItemStyle" TargetType="TabItem">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border"
+                                Background="White"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Margin="0 0 5 5"
+                                Padding="5">
+                            <ContentPresenter x:Name="ContentSite"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#FFDDDDDD"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF707070"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.Effect>
+            <DropShadowEffect 
+                BlurRadius="30" 
+                ShadowDepth="1" 
+                Opacity="0.4"
+                />
+        </Grid.Effect>
+
+        <TabControl Margin="10" 
+                    TabStripPlacement="Left"
+                    ItemContainerStyle="{StaticResource LeftTabItemStyle}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    BorderBrush="Transparent"
+                    SelectedIndex="0"
+                    >
+
+            <TabItem 
+                    Header="Principal"
+                    >
+                <Border 
+                        Background="White"
+                        CornerRadius="8" 
+                        ClipToBounds="True"
+                        >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border>
+                                <TextBlock 
+                                    Grid.Row="0"
+                                    Margin="20"
+                                    FontSize="24" 
+                                    FontWeight="Bold" 
+                                    Text="Lista de Imóveis Disponíveis"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="#333"/>
+                            </Border>
+
+                            <ItemsControl Grid.Row="2" ItemsSource="{Binding ListaImoveisDisponiveis}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel HorizontalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate >
+                                        <Border Width="420" 
+                                                Height="180" 
+                                                Margin="10"
+                                                Background="White" 
+                                                CornerRadius="8" 
+                                                BorderBrush="#6a7eee" 
+                                                BorderThickness="1" 
+                                                Padding="15">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="140" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+
+                                                    <Image 
+                                                        Source="/View/Assets/imagem-unknow.jpg"
+                                                        Height="150"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"
+                                                        Stretch="Uniform" 
+                                                        >
+                                                    </Image>
+
+                                                </StackPanel>
+
+                                                <StackPanel Margin="10" Grid.Column="1">
+                                                    <TextBlock Text="{Binding Titulo}" 
+                                                        FontWeight="Bold" 
+                                                        TextWrapping="Wrap" 
+                                                        FontSize="22"
+                                                        HorizontalAlignment="Left"
+                                                        />
+                                                    <TextBlock Text="{Binding Descricao}" 
+                                                        FontWeight="SemiBold" 
+                                                        TextWrapping="Wrap" 
+                                                        FontSize="14"
+                                                        HorizontalAlignment="Left"
+                                                        />
+                                                    <TextBlock Text="{Binding ValorAluguel, StringFormat=R$ {0:N2}}" 
+                                                        FontWeight="SemiBold" 
+                                                        TextWrapping="Wrap" 
+                                                        FontSize="18"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="0 10"
+                                                        />
+                                                    <TextBlock Text="{Binding Endereco.Cidade}" 
+                                                        FontWeight="SemiBold" 
+                                                        TextWrapping="Wrap" 
+                                                        FontSize="14"
+                                                        HorizontalAlignment="Left"
+                                                        />
+                                                    <TextBlock 
+                                                        TextAlignment="Right" 
+                                                        FontSize="14"
+                                                        
+                                                        >
+                                                        <Hyperlink TextDecorations="None" Foreground="#6a7eee" Cursor="Hand" Click="MaisClick">
+                                                            <Run Text="Mais" />
+                                                        </Hyperlink>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+            </TabItem>
+        </TabControl>
+
+
+        <DockPanel 
+                VerticalAlignment="Bottom" 
+                Background="Transparent" 
+                HorizontalAlignment="Left"
+                Margin="10 0 0 12"
+                >
+
+            <Border CornerRadius="6" Background="White">
+                <Button Content="Sair"
+                            DockPanel.Dock="Bottom"
+                            VerticalAlignment="Bottom"
+                            Margin="10"
+                            Height="30"
+                            Width="120"
+                            Background="Transparent"
+                            Foreground="Black"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="LogoutClick"
+                            >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent">
+                                            <ContentPresenter 
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Border>
+        </DockPanel>
+    </Grid>
+</UserControl>
