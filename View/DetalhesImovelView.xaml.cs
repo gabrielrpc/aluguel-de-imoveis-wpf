@@ -73,6 +73,7 @@ namespace aluguel_de_imoveis_wpf.View.Assets
                 MessageBox.Show("Aluguel registrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 await _imovelService.ListarImoveisDisponiveis();
+                await _locacaoService.ListarMinhasLocacoes();
             }
             catch (Exception ex)
             {
