@@ -102,7 +102,7 @@
                                 Padding="12"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                TextChanged="NomeTextBox_TextChanged"
+                                Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}"
                                 /> 
                             
                             <TextBlock 
@@ -133,7 +133,7 @@
                                 Padding="12"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                TextChanged="EmailTextBox_TextChanged"
+                                Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                                 />
                             
                             <TextBlock 
@@ -164,7 +164,7 @@
                                 Padding="12"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                TextChanged="CpfTextBox_TextChanged"
+                                Text="{Binding Cpf, UpdateSourceTrigger=PropertyChanged}"
                                 />
                             
                             <TextBlock 
@@ -181,31 +181,30 @@
                         </Grid>
                     </Border>
 
-                    <Border
-Background="#80c0ff" 
-Margin="0 0 0 15"
-Opacity="0.7"
-CornerRadius="6">
+                    <Border Background="#80c0ff" 
+                        Margin="0 0 0 15"
+                        Opacity="0.7"
+                        CornerRadius="6">
                         <Grid>
-                            <TextBox 
-        x:Name="TelefoneTextBox"
-        Background="Transparent"  
-        BorderThickness="0"
-        Padding="12"
-        VerticalAlignment="Center"
-        FontSize="16"
-        TextChanged="TelefoneTextBox_TextChanged"/>
+                            <TextBox x:Name="TelefoneTextBox"
+                                Background="Transparent"  
+                                BorderThickness="0"
+                                Padding="12"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="{Binding Telefone, UpdateSourceTrigger=PropertyChanged}"/>
+                            
                             <TextBlock 
-        x:Name="TelefonePlaceholderText"
-        Text="Telefone"
-        Foreground="Gray"
-        FontSize="16"
-        VerticalAlignment="Center"
-        Padding="12"
-        IsHitTestVisible="False"
-        Visibility="{Binding ElementName=TelefoneTextBox, 
-                            Path=Text, 
-                            Converter={StaticResource StringToVisibilityConverter}}"/>
+                                x:Name="TelefonePlaceholderText"
+                                Text="Telefone"
+                                Foreground="Gray"
+                                FontSize="16"
+                                VerticalAlignment="Center"
+                                Padding="12"
+                                IsHitTestVisible="False"
+                                Visibility="{Binding ElementName=TelefoneTextBox, 
+                                                    Path=Text, 
+                                                    Converter={StaticResource StringToVisibilityConverter}}"/>
                         </Grid>
                     </Border>
 
@@ -223,7 +222,7 @@ CornerRadius="6">
                                 Padding="12"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                TextChanged="SenhaTextBox_TextChanged"
+                                Text="{Binding Senha, UpdateSourceTrigger=PropertyChanged}"
                                 />
                             <TextBlock 
                                 x:Name="SenhaPlaceholderText"
@@ -239,16 +238,14 @@ CornerRadius="6">
                         </Grid>
                     </Border>
 
-                    <Border 
-                            VerticalAlignment="Top"
+                    <Border  VerticalAlignment="Top"
                             Grid.Row="2" 
                             Background="#6a7eee"
                             Height="50"
                             Width="350"
                             CornerRadius="6"
                             >
-                        <Button 
-                            Background="Transparent"
+                        <Button  Background="Transparent"
                             Content="Confirmar"
                             Foreground="White"
                             FontSize="18"
@@ -256,7 +253,7 @@ CornerRadius="6">
                             FontWeight="Bold"
                             Cursor="Hand"
                             HorizontalAlignment="Stretch"
-                            Click="RegistrarUsuarioClick"
+                            Command="{Binding RegistrarCommand}"
                             >
                             <Button.Style>
                                 <Style TargetType="Button">
@@ -286,8 +283,7 @@ CornerRadius="6">
                             <Run 
                                 Text="Já tenho uma conta! " 
                                 />      
-                            <Hyperlink
-                                Click="OnLoginClick"
+                            <Hyperlink Command="{Binding IrParaLoginCommand}"
                                 Foreground="#6a7eee" 
                                 Cursor="Hand"
                                 >

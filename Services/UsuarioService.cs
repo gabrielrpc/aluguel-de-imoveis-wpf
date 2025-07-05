@@ -86,11 +86,6 @@ namespace aluguel_de_imoveis_wpf.Services
             var json = JsonSerializer.Serialize(usuarioRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(cpf) || string.IsNullOrEmpty(telefone) || string.IsNullOrEmpty(senha))
-            {
-                throw new ArgumentException("É necessário preencher todos os dados para finalizar o cadastro!");
-            }
-
             var response = await _httpClient.PostAsync($"usuario/cadastrar", content);
 
             var responseContent = await response.Content.ReadAsStringAsync();
