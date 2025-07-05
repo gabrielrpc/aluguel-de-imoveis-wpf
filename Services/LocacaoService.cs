@@ -1,4 +1,6 @@
 ﻿using aluguel_de_imoveis_wpf.Communication.Request;
+using aluguel_de_imoveis_wpf.Communication.Response;
+using aluguel_de_imoveis_wpf.Communication.Wrapper;
 using aluguel_de_imoveis_wpf.Model;
 using aluguel_de_imoveis_wpf.Security;
 using aluguel_de_imoveis_wpf.Utils;
@@ -90,6 +92,43 @@ namespace aluguel_de_imoveis_wpf.Services
             }
 
             return "ok";
+        }
+
+        public async Task<List<ListarLocacaoResponseJson?>> ListarMinhasLocacoes()
+        {
+            var token = TokenStorage.GetToken();
+            var UsuarioId = JwtUtils.GetUserIdFromToken(token);
+
+            var response = await _httpClient.GetAsync($"locacao/listar-locacoes-ativas" + "?UsuarioId="+ UsuarioId);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var errorResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseContent);
+
+                    if (errorResponse != null && errorResponse.ContainsKey("erro"))
+                    {
+                        var mensagem = errorResponse["erro"];
+                        throw new Exception(mensagem);
+                    }
+
+                    throw new Exception("Falha ao listar as locações, tente novamente mais tarde!");
+                }
+                catch (JsonException)
+                {
+                    throw new Exception("Erro inesperado ao listar as locações.");
+                }
+            }
+
+            var wrapper = JsonSerializer.Deserialize<LocacoesWrapper>(responseContent, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return wrapper?.Locacoes ?? new List<ListarLocacaoResponseJson?>();
         }
     }
 }

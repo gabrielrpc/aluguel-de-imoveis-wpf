@@ -77,9 +77,8 @@
 
                             </Grid.RowDefinitions>
 
-                            <Border>
+                            <Border Grid.Row="0">
                                 <TextBlock 
-                                    Grid.Row="0"
                                     Margin="20"
                                     FontSize="24" 
                                     FontWeight="Bold" 
@@ -542,6 +541,91 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
+                        </Border>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <TabItem Header="Meus Alugueis" Cursor="Hand">
+                <Border 
+                    Background="White"
+                    CornerRadius="8" 
+                    ClipToBounds="True"
+                    >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="4*" />
+
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0">
+                            <TextBlock Margin="20"
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                Text="Meus Alugueis"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Foreground="#333"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Margin="20">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <UniformGrid Grid.Row="0" Columns="6" Background="#EEE">
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Proprietário" />
+                                            </Border>
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Contato" />
+                                            </Border>
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Tipo" />
+                                            </Border>
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Valor Final" />
+                                            </Border>
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Tempo Atual" />
+                                            </Border>
+                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                <TextBlock HorizontalAlignment="Center" Text="Tempo Restante" />
+                                            </Border>
+                                        </UniformGrid>
+
+                                        <ItemsControl Grid.Row="1" ItemsSource="{Binding ListaMinhasLocacoes}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <UniformGrid Columns="6">
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding NomeProprietario}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding EmailProprietario}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding TipoImovel}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding ValorFinal, StringFormat=R$ {0:N2}}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding DiasEmAndamentoTratado}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding DiasRestantesTratado}" />
+                                                        </Border>
+                                                    </UniformGrid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                            </ScrollViewer>
                         </Border>
                     </Grid>
                 </Border>

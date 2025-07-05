@@ -1,4 +1,5 @@
 ﻿using aluguel_de_imoveis.Utils.Enums;
+using aluguel_de_imoveis_wpf.Communication.Response;
 using aluguel_de_imoveis_wpf.Model;
 using aluguel_de_imoveis_wpf.Security;
 using aluguel_de_imoveis_wpf.Services;
@@ -16,10 +17,12 @@ namespace aluguel_de_imoveis_wpf.View
     public partial class PainelView : UserControl
     {
         public ObservableCollection<Imovel> ListaImoveisDisponiveis { get; set; }
+        public ObservableCollection<ListarLocacaoResponseJson> ListaMinhasLocacoes { get; set; }
 
         public TipoImovel TipoSelecionado { get; set; }
 
         private readonly ImovelService _imovelService;
+        private readonly LocacaoService _locacaoService;
         private readonly MainWindow _mainWindow;
 
         public PainelView(MainWindow mainWindow)
@@ -27,6 +30,7 @@ namespace aluguel_de_imoveis_wpf.View
             InitializeComponent();
 
             _imovelService = new ImovelService();
+            _locacaoService = new LocacaoService();
             _mainWindow = mainWindow;
 
             ComboTipoImovel.ItemsSource = Enum.GetValues(typeof(TipoImovel));
@@ -34,9 +38,13 @@ namespace aluguel_de_imoveis_wpf.View
 
             ListaImoveisDisponiveis = new ObservableCollection<Imovel>();
 
+            ListaMinhasLocacoes = new ObservableCollection<ListarLocacaoResponseJson>();
+
             DataContext = this;
 
             Loaded += async (_, _) => await CarregarImoveisAsync();
+
+            Loaded += async (_, _) => await CarregarMinhasLocacoes();
         }
 
         private async Task CarregarImoveisAsync()
@@ -50,6 +58,27 @@ namespace aluguel_de_imoveis_wpf.View
                 foreach (var imovel in imoveis.Where(i => i != null))
                 {
                     ListaImoveisDisponiveis.Add(imovel!);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async Task CarregarMinhasLocacoes() 
+        {
+            try
+            {
+                var locacoes = await _locacaoService.ListarMinhasLocacoes();
+
+                ListaMinhasLocacoes.Clear();
+
+                foreach (var locacao in locacoes.Where(l => l != null))
+                {
+                    locacao!.DiasEmAndamentoTratado = TratarDiasEmAndamento(locacao.DiasEmAndamento);
+                    locacao!.DiasRestantesTratado = TratarDiasRestantes(locacao.DiasEmAndamento, locacao.DiasRestantes);
+                    ListaMinhasLocacoes.Add(locacao!);
                 }
             }
             catch (Exception ex)
@@ -146,6 +175,37 @@ namespace aluguel_de_imoveis_wpf.View
                 TokenStorage.ClearToken();
                 _mainWindow.AbrirLogin();
             }
+        }
+   
+        private string TratarDiasEmAndamento(int atual)
+        {
+            if (atual < 0)
+            {
+                return $"Início em {Math.Abs(atual)} dias";
+            }
+            else if (atual >= 0)
+            {
+                return $"Dia {atual + 1} da contagem ";
+            }
+
+            return string.Empty;
+        }
+
+        private string TratarDiasRestantes(int atual, int resto)
+        {
+            if (atual < 0)
+            {
+                return $"{atual + resto} dias faltando";
+            }
+            else if (atual >= 0)
+            {
+                return $"Faltam {resto} dias";
+            }else if (resto == 0)
+            {
+                return "Locação finalizada";
+            }
+
+            return string.Empty;
         }
     }
 }
