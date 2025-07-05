@@ -1,6 +1,4 @@
-﻿using aluguel_de_imoveis_wpf.Services;
-using aluguel_de_imoveis_wpf.ViewModel;
-using System.Windows;
+﻿using aluguel_de_imoveis_wpf.ViewModel;
 using System.Windows.Controls;
 
 namespace aluguel_de_imoveis_wpf.View

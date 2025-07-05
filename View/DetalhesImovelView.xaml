@@ -25,7 +25,12 @@
 
                     <Border Grid.Row="0">
                         <TextBlock Margin="20 0" >
-                            <Hyperlink TextDecorations="None" FontWeight="DemiBold" Foreground="#6a7eee" Cursor="Hand" Click="VoltarClick" FontSize="18">
+                            <Hyperlink TextDecorations="None" 
+                                       FontWeight="DemiBold" 
+                                       Foreground="#6a7eee" 
+                                       Cursor="Hand" 
+                                       FontSize="18"
+                                       Command="{Binding VoltarCommand}">
                                 <Run Text="Voltar" />
                             </Hyperlink>
                         </TextBlock>
@@ -90,46 +95,45 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Margin="10">
-                                <TextBlock Text="{Binding ValorAluguel, StringFormat=R$ {0:N2}}"
+                                <TextBlock Text="{Binding Imovel.ValorAluguel, StringFormat=R$ {0:N2}}"
                                    FontSize="28"
                                    FontWeight="Bold"
                                    Margin="0 0 0 10"
                                        />
 
-                                <TextBlock Text="{Binding ValorAluguel, StringFormat=Aluguel - R$ {0:N2} / Mês}"
+                                <TextBlock Text="{Binding Imovel.ValorAluguel, StringFormat=Aluguel - R$ {0:N2} / Mês}"
                                    FontSize="16"
                                    Margin="0 0 0 20"
                                        />
 
                                 <StackPanel Orientation="Horizontal" Margin="0">
                                     <TextBlock Text="Proprietário:" FontSize="16" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Usuario.Nome}" Margin="5 0" FontSize="16"/>
+                                    <TextBlock Text="{Binding Imovel.Usuario.Nome}" Margin="5 0" FontSize="16"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="0 10">
                                     <TextBlock Text="E-mail:" FontSize="16" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Usuario.Email}" Margin="5 0" FontSize="16"/>
+                                    <TextBlock Text="{Binding Imovel.Usuario.Email}" Margin="5 0" FontSize="16"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                                     <TextBlock Text="📞" FontSize="16" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Usuario.Telefone}" Margin="5 0" FontSize="16"/>
+                                    <TextBlock Text="{Binding Imovel.Usuario.Telefone}" Margin="5 0" FontSize="16"/>
                                 </StackPanel>
 
-                                <StackPanel Visibility="{Binding UsuarioId, Converter={StaticResource UsuarioVisibilidadeConverter}}" >
+                                <StackPanel Visibility="{Binding Imovel.UsuarioId, Converter={StaticResource UsuarioVisibilidadeConverter}}" >
 
                                     <TextBlock Margin="0 20" Text="Registre seu aluguel abaixo" FontWeight="DemiBold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 
                                     <UniformGrid Columns="2">
                                         <TextBlock Text="Data Início:" FontSize="16" VerticalAlignment="Center"/>
-                                        <TextBlock Margin="5 0 0 0" Text="Data Fim" FontSize="16" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="5 0 0 0" Text="Data Fim:" FontSize="16" VerticalAlignment="Center"/>
                                     </UniformGrid>
                                 
                                     <UniformGrid Columns="2">
                                         <DatePicker Margin="0 0 5 10"
                                                 IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
-                                                SelectedDate="{Binding MinhaData, StringFormat='dd/MM/yyyy', Mode=TwoWay}"
-                                                SelectedDateChanged="SelectDateInicio">
+                                                SelectedDate="{Binding DataInicio}">
                                             <DatePicker.Resources>
                                                 <Style TargetType="DatePickerTextBox">
                                                     <Setter Property="IsReadOnly" Value="True"/>
@@ -142,8 +146,7 @@
                                     
                                         <DatePicker Margin="5 0 0 10" 
                                                 IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
-                                                SelectedDate="{Binding MinhaData, StringFormat='dd/MM/yyyy', Mode=TwoWay}"
-                                                SelectedDateChanged="SelectDateFim">
+                                                SelectedDate="{Binding DataFim}">
                                             <DatePicker.Resources>
                                                 <Style TargetType="DatePickerTextBox">
                                                     <Setter Property="IsReadOnly" Value="True"/>
@@ -163,7 +166,7 @@
                                     Padding="10"
                                     Cursor="Hand"
                                     Margin="0 0 0 20"
-                                    Click="RegistrarAluguel"/>
+                                    Command="{Binding RegistrarCommand}" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

@@ -1,14 +1,9 @@
 ﻿using aluguel_de_imoveis_wpf.Services;
 using aluguel_de_imoveis_wpf.Utils;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 
 namespace aluguel_de_imoveis_wpf.ViewModel
 {
