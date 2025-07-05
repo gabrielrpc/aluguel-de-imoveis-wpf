@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace aluguel_de_imoveis_wpf.View
+namespace aluguel_de_imoveis_wpf.Converters
 {
     public class StringToVisibilityConverter : IValueConverter
     {

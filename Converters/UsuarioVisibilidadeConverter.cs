@@ -9,7 +9,7 @@ using System.Windows.Data;
 using System.Windows;
 using aluguel_de_imoveis_wpf.Utils;
 
-namespace aluguel_de_imoveis_wpf.View
+namespace aluguel_de_imoveis_wpf.Converters
 {
     public class UsuarioVisibilidadeConverter : IValueConverter
     {

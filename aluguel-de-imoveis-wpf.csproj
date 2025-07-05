@@ -11,13 +11,9 @@
 
   <ItemGroup>
     <Compile Remove="NewFolder\**" />
-    <Compile Remove="ViewModel\**" />
     <EmbeddedResource Remove="NewFolder\**" />
-    <EmbeddedResource Remove="ViewModel\**" />
     <None Remove="NewFolder\**" />
-    <None Remove="ViewModel\**" />
     <Page Remove="NewFolder\**" />
-    <Page Remove="ViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="View\Assets\imagem-unknow.jpg" />
+    <None Remove="Assets\imagem-unknow.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\Assets\imagem-unknow.jpg">
+    <Resource Include="Assets\imagem-unknow.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -51,6 +47,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 
 </Project>
