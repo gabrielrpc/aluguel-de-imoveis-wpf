@@ -116,14 +116,55 @@
                                     <TextBlock Text="{Binding Usuario.Telefone}" Margin="5 0" FontSize="16"/>
                                 </StackPanel>
 
-                                <Button Content="Alugar"
+                                <StackPanel Visibility="{Binding UsuarioId, Converter={StaticResource UsuarioVisibilidadeConverter}}" >
+
+                                    <TextBlock Margin="0 20" Text="Registre seu aluguel abaixo" FontWeight="DemiBold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                
+                                    <UniformGrid Columns="2">
+                                        <TextBlock Text="Data Início:" FontSize="16" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="5 0 0 0" Text="Data Fim" FontSize="16" VerticalAlignment="Center"/>
+                                    </UniformGrid>
+                                
+                                    <UniformGrid Columns="2">
+                                        <DatePicker Margin="0 0 5 10"
+                                                IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
+                                                SelectedDate="{Binding MinhaData, StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                                                SelectedDateChanged="SelectDateInicio">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="DatePickerTextBox">
+                                                    <Setter Property="IsReadOnly" Value="True"/>
+                                                    <Setter Property="IsHitTestVisible" Value="False"/>
+
+                                                    <Setter Property="Background" Value="White"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                    
+                                        <DatePicker Margin="5 0 0 10" 
+                                                IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
+                                                SelectedDate="{Binding MinhaData, StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                                                SelectedDateChanged="SelectDateFim">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="DatePickerTextBox">
+                                                    <Setter Property="IsReadOnly" Value="True"/>
+                                                    <Setter Property="IsHitTestVisible" Value="False"/>
+
+                                                    <Setter Property="Background" Value="White"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                    </UniformGrid>
+
+
+                                    <Button Content="Registrar Aluguel"
                                     Background="Orange"
                                     Foreground="White"
                                     FontWeight="Bold"
                                     Padding="10"
                                     Cursor="Hand"
                                     Margin="0 0 0 20"
-                                    Visibility="{Binding UsuarioId, Converter={StaticResource UsuarioVisibilidadeConverter}}" />
+                                    Click="RegistrarAluguel"/>
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Border>
