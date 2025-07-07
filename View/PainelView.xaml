@@ -155,7 +155,11 @@
                                                         FontSize="14"
                                                         
                                                         >
-                                                        <Hyperlink TextDecorations="None" Foreground="#6a7eee" Cursor="Hand" Click="MaisClick">
+                                                        <Hyperlink TextDecorations="None" 
+                                                            Foreground="#6a7eee" 
+                                                            Cursor="Hand"
+                                                            Command="{Binding DataContext.AbrirDetalhesCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                            CommandParameter="{Binding}">
                                                             <Run Text="Mais" />
                                                         </Hyperlink>
                                                     </TextBlock>
@@ -229,6 +233,7 @@
                                                  MinHeight="45"
                                                  MaxHeight="70"
                                                  Width="320"
+                                                 Text="{Binding Titulo}"
                                                  />
 
                                             <TextBlock x:Name="TituloPlaceholderText"
@@ -260,6 +265,7 @@
                                                  MinHeight="45"
                                                  MaxHeight="200"
                                                  Width="320"
+                                                 Text="{Binding Descricao}"
                                                  />
 
                                             <TextBlock x:Name="DescricaoPlaceholderText"
@@ -286,6 +292,7 @@
                                                  VerticalAlignment="Center"
                                                  FontSize="16"
                                                  Padding="12"
+                                                 Text="{Binding ValorAluguelTexto, UpdateSourceTrigger=PropertyChanged}"
                                                  />
 
                                             <TextBlock x:Name="ValorAluguelPlaceholderText"
@@ -303,21 +310,13 @@
 
                                     <Grid Margin="0 0 0 10">
                                         <ComboBox x:Name="ComboTipoImovel"
-                                           SelectedItem="{Binding TipoSelecionado}" 
                                            BorderThickness="0"
                                            Padding="12"
                                            VerticalAlignment="Center"
-                                           FontSize="16"/>
+                                           FontSize="16"
+                                           ItemsSource="{Binding TiposImovel}"
+                                           SelectedItem="{Binding TipoSelecionado}"  />
 
-                                        <TextBlock  x:Name="TelefonePlaceholderText"
-                                            Text="Tipo do imóvel"
-                                            Foreground="Gray"
-                                            FontSize="16"
-                                            VerticalAlignment="Center"
-                                            Padding="12"
-                                            IsHitTestVisible="False"
-                                            Visibility="{Binding ElementName=ComboTipoImovel, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
-                                        />
                                     </Grid>
 
                                     <Border Background="#80c0ff" 
@@ -332,7 +331,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="16"
                                                 Padding="12"
-                                                />
+                                                Text="{Binding Cep, UpdateSourceTrigger=PropertyChanged}"/>
 
                                             <TextBlock x:Name="CepPlaceholderText"
                                                  Text="CEP"
@@ -370,7 +369,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="16"
                                                 Padding="12"
-                                                />
+                                                Text="{Binding Logradouro}"/>
 
                                             <TextBlock x:Name="LogradouroPlaceholderText"
                                                  Text="Logradouro"
@@ -380,7 +379,6 @@
                                                  Padding="12"
                                                  IsHitTestVisible="False"
                                                  Visibility="{Binding ElementName=LogradouroTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
-                 
                                                  />
                                         </Grid>
                                     </Border>
@@ -403,7 +401,7 @@
                                                  MinHeight="45"
                                                  MaxHeight="70"
                                                  Width="320"
-                                                 />
+                                                 Text="{Binding NumeroTexto, UpdateSourceTrigger=PropertyChanged}"/>
 
                                             <TextBlock x:Name="NumeroPlaceholderText"
                                                  Text="Número"
@@ -434,7 +432,7 @@
                                                  MinHeight="45"
                                                  MaxHeight="200"
                                                  Width="320"
-                                                 />
+                                                 Text="{Binding Bairro}"/>
 
                                             <TextBlock x:Name="BairroPlaceholderText"
                                                  Text="Bairro"
@@ -460,7 +458,7 @@
                                                  VerticalAlignment="Center"
                                                  FontSize="16"
                                                  Padding="12"
-                                                 />
+                                                 Text="{Binding Cidade}"/>
 
                                             <TextBlock x:Name="CidadePlaceholderText"
                                                  Text="Cidade"
@@ -487,7 +485,7 @@
                                                  VerticalAlignment="Center"
                                                  FontSize="16"
                                                  Padding="12"
-                                                 />
+                                                 Text="{Binding Uf}"/>
 
                                             <TextBlock x:Name="UfPlaceholderText"
                                                  Text="UF"
@@ -521,7 +519,7 @@
                                 FontWeight="Bold"
                                 Cursor="Hand"
                                 HorizontalAlignment="Stretch"
-                                Click="CadastrarImovel"
+                                Command="{Binding CadastrarImovelCommand}"
                                 IsDefault="True"
                                 >
                                 <Button.Style>
@@ -652,7 +650,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Cursor="Hand"
-                            Click="LogoutClick"
+                            Command="{Binding LogoutCommand}"
                             >
                     <Button.Style>
                         <Style TargetType="Button">

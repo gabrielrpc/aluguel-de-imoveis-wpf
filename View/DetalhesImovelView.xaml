@@ -7,6 +7,7 @@
 
     <Page.Resources>
         <local:UsuarioVisibilidadeConverter x:Key="UsuarioVisibilidadeConverter" />
+        <local:TelefoneFormatConverter x:Key="TelefoneFormatConverter" />
     </Page.Resources>
     
     <Grid Margin="20">
@@ -82,13 +83,13 @@
                                         />
                                 </UniformGrid>
 
-                                <TextBlock Text="{Binding Titulo}"
+                                <TextBlock Text="{Binding Imovel.Titulo}"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    TextWrapping="Wrap"
                                    Margin="0 10 0 5"/>
 
-                                <TextBlock Text="{Binding Descricao}"
+                                <TextBlock Text="{Binding Imovel.Descricao}"
                                    FontSize="14"
                                    TextWrapping="Wrap"
                                    />
@@ -118,7 +119,7 @@
 
                                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                                     <TextBlock Text="📞" FontSize="16" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Imovel.Usuario.Telefone}" Margin="5 0" FontSize="16"/>
+                                    <TextBlock Text="{Binding Imovel.Usuario.Telefone, Converter={StaticResource TelefoneFormatConverter}}" Margin="5 0" FontSize="16"/>
                                 </StackPanel>
 
                                 <StackPanel Visibility="{Binding Imovel.UsuarioId, Converter={StaticResource UsuarioVisibilidadeConverter}}" >
@@ -132,7 +133,6 @@
                                 
                                     <UniformGrid Columns="2">
                                         <DatePicker Margin="0 0 5 10"
-                                                IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
                                                 SelectedDate="{Binding DataInicio}">
                                             <DatePicker.Resources>
                                                 <Style TargetType="DatePickerTextBox">
@@ -145,7 +145,6 @@
                                         </DatePicker>
                                     
                                         <DatePicker Margin="5 0 0 10" 
-                                                IsDropDownOpen="{Binding IsChecked, ElementName=IsDropDownOpenCheckBox, Mode=TwoWay}"
                                                 SelectedDate="{Binding DataFim}">
                                             <DatePicker.Resources>
                                                 <Style TargetType="DatePickerTextBox">

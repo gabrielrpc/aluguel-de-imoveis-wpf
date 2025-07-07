@@ -11,19 +11,19 @@ namespace aluguel_de_imoveis_wpf.ViewModel
     public class DetalhesImovelViewModel : INotifyPropertyChanged
     {
         private readonly LocacaoService _locacaoService;
-        private readonly ImovelService _imovelService;
         private readonly Action _voltarParaPainel;
+        private readonly Func<Task> _atualizarPainel;
 
         private DateTime? _dataInicio;
         private DateTime? _dataFim;
 
         public Imovel Imovel { get; }
 
-        public DetalhesImovelViewModel(Imovel imovel, Action voltarParaPainel)
+        public DetalhesImovelViewModel(Imovel imovel, Action voltarParaPainel, Func<Task> atualizarPainel)
         {
             _locacaoService = new LocacaoService();
-            _imovelService = new ImovelService();
             _voltarParaPainel = voltarParaPainel;
+            _atualizarPainel = atualizarPainel;
 
             Imovel = imovel;
             RegistrarCommand = new RelayCommand(async (_) => await RegistrarAsync());
@@ -57,10 +57,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             {
                 await _locacaoService.RegistrarLocacaoAsync(DataInicio.Value, DataFim.Value, Imovel.Id);
 
-                MessageBox.Show("Aluguel registrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                await _atualizarPainel();
 
-                await _imovelService.ListarImoveisDisponiveis();
-                await _locacaoService.ListarMinhasLocacoes();
+                MessageBox.Show("Aluguel registrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 _voltarParaPainel();
             }

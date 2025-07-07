@@ -21,9 +21,9 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new PainelView(this));
     }
 
-    public void AbrirDetalhes(Imovel imovel)
+    public void AbrirDetalhes(Imovel imovel, Func<Task> atualizarPainel)
     {
-        MainFrame.Navigate(new DetalhesImovelView(this, imovel));
+        MainFrame.Navigate(new DetalhesImovelView(this, imovel, atualizarPainel));
     }
 
     public void AbrirRegistrar()

@@ -6,10 +6,10 @@ namespace aluguel_de_imoveis_wpf.View.Assets
 {
     public partial class DetalhesImovelView : Page
     {
-        public DetalhesImovelView(MainWindow mainWindow, Imovel imovel)
+        public DetalhesImovelView(MainWindow mainWindow, Imovel imovel, Func<Task> atualizarPainel)
         {
             InitializeComponent();
-            DataContext = new DetalhesImovelViewModel(imovel, mainWindow.VoltarParaPainel);
+            DataContext = new DetalhesImovelViewModel(imovel, mainWindow.VoltarParaPainel, atualizarPainel);
         }
     }
 }
