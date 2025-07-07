@@ -4,6 +4,7 @@ using aluguel_de_imoveis_wpf.Model;
 using aluguel_de_imoveis_wpf.Security;
 using aluguel_de_imoveis_wpf.Services;
 using aluguel_de_imoveis_wpf.Utils;
+using aluguel_de_imoveis_wpf.Utils.Enums;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -25,6 +26,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public ObservableCollection<Imovel> ListaRelatorio { get; } = new();
 
         public TipoImovel TipoSelecionado { get; set; }
+        public UF UfSelecionado { get; set; } = UF.RJ;
 
         public string _titulo = string.Empty;
         public string _descricao = string.Empty;
@@ -33,12 +35,12 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public string _numeroTexto = string.Empty;
         public string _bairro = string.Empty;
         public string _cidade = string.Empty;
-        public string _uf = string.Empty;
         public string _cep = string.Empty;
         public string _valorAluguelMaxTexto = string.Empty;
         public string _valorAluguelMinTexto = string.Empty;
 
         public Array TiposImovel { get; } = Enum.GetValues(typeof(TipoImovel));
+        public Array UfEnum { get; } = Enum.GetValues(typeof(UF));
 
         public TipoImovel? TipoSelecionadoRel { get; set; } = TipoImovel.Casa;
 
@@ -46,6 +48,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public ICommand LogoutCommand { get; }
         public ICommand AbrirDetalhesCommand { get; }
         public ICommand FiltrarRelatorioCommand { get; }
+
+        public ICommand ProximaCommand { get; }
+        public ICommand AnteriorCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -60,6 +65,8 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             LogoutCommand = new RelayCommand(_ => RealizarLogout());
             AbrirDetalhesCommand = new RelayCommand<Imovel>(AbrirDetalhes);
             FiltrarRelatorioCommand = new RelayCommand(async (_) => await FiltrarRelatorios());
+            ProximaCommand = new RelayCommand(async (_) => await ProximaPaginaAsync());
+            AnteriorCommand = new RelayCommand(async (_) => await PaginaAnteriorAsync());
 
             _ = CarregarDados();
         }
@@ -92,12 +99,6 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         {
             get => _cidade;
             set { _cidade = value; OnPropertyChanged(); }
-        }
-
-        public string Uf
-        {
-            get => _uf;
-            set { _uf = value; OnPropertyChanged(); }
         }
 
         public string Cep
@@ -159,6 +160,69 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
         }
 
+        private int _paginaAtual = 1;
+        private const int _itensPorPagina = 10;
+        private bool _podeAvancar = true;
+        private bool _podeRetornar = false;
+
+        public bool PodeAvancar
+        {
+            get => _podeAvancar;
+            set
+            {
+                if (_podeAvancar != value)
+                {
+                    _podeAvancar = value;
+                    OnPropertyChanged(nameof(PodeAvancar));
+                }
+            }
+        }
+
+        public bool PodeVoltar
+        {
+            get => _paginaAtual > 1;
+        }
+
+        public int PaginaAtual
+        {
+            get => _paginaAtual;
+            set { _paginaAtual = value; OnPropertyChanged(); }
+        }
+
+        private async Task ProximaPaginaAsync()
+        {
+            var proximaPagina = _paginaAtual + 1;
+            var imoveis = await _imovelService.ListarImoveisDisponiveis(pagina: proximaPagina);
+
+            if (imoveis != null && imoveis.Any())
+            {
+                _paginaAtual = proximaPagina;
+                AtualizarLista(imoveis);
+            }
+
+            else
+            {
+                MessageBox.Show("Não há mais imóveis disponíveis para exibição.");
+                PodeAvancar = false;
+            }
+
+            OnPropertyChanged(nameof(PodeVoltar));
+            OnPropertyChanged(nameof(PaginaAtual));
+        }
+
+        private async Task PaginaAnteriorAsync()
+        {
+            if (_paginaAtual > 1)
+            {
+                _paginaAtual--;
+                var imoveis = await _imovelService.ListarImoveisDisponiveis(pagina: _paginaAtual);
+                AtualizarLista(imoveis);
+
+                OnPropertyChanged(nameof(PaginaAtual));
+                OnPropertyChanged(nameof(PodeVoltar));
+            }
+        }
+
         private string FormatarValorMonetario(string value)
         {
             var digits = new string(value.Where(char.IsDigit).ToArray());
@@ -178,15 +242,22 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             await CarregarMinhasLocacoes();
         }
 
+        private void AtualizarLista(List<Imovel?> imoveis)
+        {
+            ListaImoveisDisponiveis.Clear();
+
+            foreach (var imovel in imoveis.Where(i => i != null))
+                ListaImoveisDisponiveis.Add(imovel!);
+
+            PodeAvancar = imoveis.Count == _itensPorPagina;
+        }
+
         private async Task CarregarImoveisAsync()
         {
             try
             {
                 var imoveis = await _imovelService.ListarImoveisDisponiveis();
-                ListaImoveisDisponiveis.Clear();
-
-                foreach (var imovel in imoveis.Where(i => i != null))
-                    ListaImoveisDisponiveis.Add(imovel!);
+                AtualizarLista(imoveis);
             }
             catch (Exception ex)
             {
@@ -244,7 +315,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
                         Numero = numero,
                         Bairro = Bairro,
                         Cidade = Cidade,
-                        Uf = Uf,
+                        Uf = UfSelecionado.ToString(),
                         Cep = Cep
                     }
                 };
@@ -303,8 +374,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
 
         private void LimparCampos()
         {
-            Titulo = Descricao = ValorAluguelTexto = Logradouro = NumeroTexto = Bairro = Cidade = Uf = Cep = "";
+            Titulo = Descricao = ValorAluguelTexto = Logradouro = NumeroTexto = Bairro = Cidade = Cep = "";
             TipoSelecionado = (TipoImovel)TiposImovel.GetValue(0)!;
+            UfSelecionado = UF.RJ;
             OnPropertyChanged(nameof(Titulo));
             OnPropertyChanged(nameof(Descricao));
             OnPropertyChanged(nameof(ValorAluguelTexto));
@@ -312,9 +384,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             OnPropertyChanged(nameof(NumeroTexto));
             OnPropertyChanged(nameof(Bairro));
             OnPropertyChanged(nameof(Cidade));
-            OnPropertyChanged(nameof(Uf));
             OnPropertyChanged(nameof(Cep));
             OnPropertyChanged(nameof(TipoSelecionado));
+            OnPropertyChanged(nameof(UfSelecionado));
         }
 
         private void RealizarLogout()

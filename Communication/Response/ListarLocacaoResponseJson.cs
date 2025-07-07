@@ -14,6 +14,7 @@ namespace aluguel_de_imoveis_wpf.Communication.Response
         public string DiasEmAndamentoTratado { get; set; } = string.Empty;
         public string DiasRestantesTratado { get; set; } = string.Empty;
 
+        public string TituloImovel { get; set; } = string.Empty;
         public decimal ValorFinal { get; set; }
         public int DiasEmAndamento { get; set; }
         public int DiasRestantes { get; set; }

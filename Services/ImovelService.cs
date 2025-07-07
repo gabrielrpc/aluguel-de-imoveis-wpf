@@ -1,18 +1,9 @@
 ﻿using aluguel_de_imoveis.Utils.Enums;
-using aluguel_de_imoveis_wpf.Communication.Response;
 using aluguel_de_imoveis_wpf.Model;
-using aluguel_de_imoveis_wpf.Security;
-using aluguel_de_imoveis_wpf.Utils;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace aluguel_de_imoveis_wpf.Services
 {

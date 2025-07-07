@@ -75,6 +75,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="4*" />
+                                <RowDefinition Height="*" />
 
                             </Grid.RowDefinitions>
 
@@ -89,7 +90,7 @@
                                     Foreground="#333"/>
                             </Border>
 
-                            <ItemsControl Grid.Row="2" ItemsSource="{Binding ListaImoveisDisponiveis}">
+                            <ItemsControl Grid.Row="1" ItemsSource="{Binding ListaImoveisDisponiveis}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel HorizontalAlignment="Center"
@@ -170,6 +171,95 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+
+                            <StackPanel
+                                Grid.Row="2" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" 
+                                Margin="0,10,0,20" >
+                                <Border  VerticalAlignment="Center"
+                                    Background="#6a7eee"
+                                    Height="45"
+                                    Width="100"
+                                    CornerRadius="6"                        
+                                    >
+                                    <Button Content="Anterior" 
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        FontSize="18"
+                                        BorderThickness="0"
+                                        FontWeight="Bold"
+                                        Cursor="Hand"
+                                        Command="{Binding AnteriorCommand}"
+                                        Margin="5"
+                                        IsEnabled="{Binding PodeVoltar}" >
+                                        
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="Transparent">
+                                                                <ContentPresenter 
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     />
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Border>
+
+                                <TextBlock Text="{Binding PaginaAtual}" 
+                                   VerticalAlignment="Center" 
+                                   FontWeight="Bold" 
+                                   FontSize="22"
+                                   Margin="10,0" />
+
+                                <Border  VerticalAlignment="Center"
+                                    Background="#6a7eee"
+                                    Height="45"
+                                    Width="100"
+                                    CornerRadius="6"                        
+                                    >
+                                    <Button Content="Próxima" 
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        FontSize="18"
+                                        BorderThickness="0"
+                                        FontWeight="Bold"
+                                        Cursor="Hand"
+                                        Command="{Binding ProximaCommand}"
+                                        Margin="5"
+                                        IsEnabled="{Binding PodeAvancar}" > 
+                                        
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="Transparent">
+                                                                    <ContentPresenter 
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            />
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding PodeAvancar}" Value="False">
+                                                            <Setter Property="Cursor" Value="No"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                            </Style>
+                                            </Button.Style>
+                                    </Button>
+                                </Border>
+                            </StackPanel>
                         </Grid>
                     </ScrollViewer>
                 </Border>
@@ -474,32 +564,16 @@
                                         </Grid>
                                     </Border>
 
-                                    <Border Background="#80c0ff" 
-                                        Margin="0 0 0 15"
-                                        Opacity="0.7"
-                                        CornerRadius="6"
-                                        >
-                                        <Grid>
-                                            <TextBox  x:Name="UfTextBox"
-                                                 Background="Transparent"  
-                                                 BorderThickness="0"
-                                                 VerticalAlignment="Center"
-                                                 FontSize="16"
-                                                 Padding="12"
-                                                 Text="{Binding Uf}"/>
+                                    <Grid Margin="0 0 0 10">
+                                        <ComboBox x:Name="ComboUf"
+                                           BorderThickness="0"
+                                           Padding="12"
+                                           VerticalAlignment="Center"
+                                           FontSize="16"
+                                           ItemsSource="{Binding UfEnum}"
+                                           SelectedItem="{Binding UfSelecionado}"  />
 
-                                            <TextBlock x:Name="UfPlaceholderText"
-                                                 Text="UF"
-                                                 Foreground="Gray"
-                                                 FontSize="16"
-                                                 VerticalAlignment="Center"
-                                                 Padding="12"
-                                                 IsHitTestVisible="False"
-                                                 Visibility="{Binding ElementName=UfTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
-                 
-                                                 />
-                                        </Grid>
-                                    </Border>
+                                    </Grid>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -576,14 +650,17 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
 
-                                        <UniformGrid Grid.Row="0" Columns="6" Background="#EEE">
+                                        <UniformGrid Grid.Row="0" Columns="7" Background="#EEE">
                                             <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                 <TextBlock HorizontalAlignment="Center" Text="Proprietário" />
                                             </Border>
                                             <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                 <TextBlock HorizontalAlignment="Center" Text="Contato" />
                                             </Border>
-                                            <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Título" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                 <TextBlock HorizontalAlignment="Center" Text="Tipo" />
                                             </Border>
                                             <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
@@ -600,12 +677,15 @@
                                         <ItemsControl Grid.Row="1" ItemsSource="{Binding ListaMinhasLocacoes}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <UniformGrid Columns="6">
+                                                    <UniformGrid Columns="7">
                                                         <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                             <TextBlock HorizontalAlignment="Center" Text="{Binding NomeProprietario}" />
                                                         </Border>
                                                         <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                             <TextBlock HorizontalAlignment="Center" Text="{Binding EmailProprietario}" />
+                                                        </Border>
+                                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding TituloImovel}" />
                                                         </Border>
                                                         <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
                                                             <TextBlock HorizontalAlignment="Center" Text="{Binding TipoImovel}" />
@@ -646,7 +726,7 @@
                             <TextBlock Margin="20"
                                 FontSize="24" 
                                 FontWeight="Bold" 
-                                Text="Relatório de Imóveis"
+                                Text="Relatório de Imóveis Disponíveis"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
                                 Foreground="#333"/>
