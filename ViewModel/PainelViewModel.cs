@@ -22,6 +22,8 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public ObservableCollection<Imovel> ListaImoveisDisponiveis { get; } = new();
         public ObservableCollection<ListarLocacaoResponseJson> ListaMinhasLocacoes { get; } = new();
 
+        public ObservableCollection<Imovel> ListaRelatorio { get; } = new();
+
         public TipoImovel TipoSelecionado { get; set; }
 
         public string _titulo = string.Empty;
@@ -33,12 +35,17 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public string _cidade = string.Empty;
         public string _uf = string.Empty;
         public string _cep = string.Empty;
+        public string _valorAluguelMaxTexto = string.Empty;
+        public string _valorAluguelMinTexto = string.Empty;
 
         public Array TiposImovel { get; } = Enum.GetValues(typeof(TipoImovel));
+
+        public TipoImovel? TipoSelecionadoRel { get; set; } = TipoImovel.Casa;
 
         public ICommand CadastrarImovelCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand AbrirDetalhesCommand { get; }
+        public ICommand FiltrarRelatorioCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -52,6 +59,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             CadastrarImovelCommand = new RelayCommand(async (_) => await CadastrarImovelAsync());
             LogoutCommand = new RelayCommand(_ => RealizarLogout());
             AbrirDetalhesCommand = new RelayCommand<Imovel>(AbrirDetalhes);
+            FiltrarRelatorioCommand = new RelayCommand(async (_) => await FiltrarRelatorios());
 
             _ = CarregarDados();
         }
@@ -126,23 +134,42 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             get => _valorAluguelTexto;
             set
             {
-                var digits = new string(value.Where(char.IsDigit).ToArray());
-
-                if (string.IsNullOrEmpty(digits))
-                {
-                    _valorAluguelTexto = "";
-                    OnPropertyChanged();
-                    return;
-                }
-
-                if (decimal.TryParse(digits, out decimal parsed))
-                {
-                    parsed /= 100; 
-                    _valorAluguelTexto = parsed.ToString("N2"); 
-                }
-
+                _valorAluguelTexto = FormatarValorMonetario(value);
                 OnPropertyChanged();
             }
+        }
+
+        public string ValorAluguelMaxTexto
+        {
+            get => _valorAluguelMaxTexto;
+            set
+            {
+                _valorAluguelMaxTexto = FormatarValorMonetario(value);
+                OnPropertyChanged();
+            }
+        }
+
+        public string ValorAluguelMinTexto
+        {
+            get => _valorAluguelMinTexto;
+            set
+            {
+                _valorAluguelMinTexto = FormatarValorMonetario(value);
+                OnPropertyChanged();
+            }
+        }
+
+        private string FormatarValorMonetario(string value)
+        {
+            var digits = new string(value.Where(char.IsDigit).ToArray());
+
+            if (string.IsNullOrEmpty(digits))
+                return "";
+
+            if (decimal.TryParse(digits, out decimal parsed))
+                return (parsed / 100).ToString("N2");
+
+            return "";
         }
 
         private async Task CarregarDados()
@@ -227,6 +254,46 @@ namespace aluguel_de_imoveis_wpf.ViewModel
 
                 LimparCampos();
                 await CarregarImoveisAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async Task FiltrarRelatorios()
+        {
+            try
+            {
+                TipoImovel? tipo = TipoSelecionadoRel;
+                decimal? valorMin = null;
+                decimal? valorMax = null;
+
+                if (tipo == null && string.IsNullOrWhiteSpace(ValorAluguelMinTexto) &&  string.IsNullOrWhiteSpace(ValorAluguelMaxTexto))
+                {
+                    throw new Exception("Preencha ao menos um dos campos para realizar o filtro.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(ValorAluguelMinTexto))
+                {
+                    if (!decimal.TryParse(ValorAluguelMinTexto, out var min))
+                        throw new Exception("Valor mínimo do aluguel inválido.");
+                    valorMin = min;
+                }
+
+                if (!string.IsNullOrWhiteSpace(ValorAluguelMaxTexto))
+                {
+                    if (!decimal.TryParse(ValorAluguelMaxTexto, out var max))
+                        throw new Exception("Valor máximo do aluguel inválido.");
+                    valorMax = max;
+                }
+
+
+                var imoveis = await _imovelService.ListarImoveisDisponiveis(tipo, valorMin, valorMax);
+                ListaRelatorio.Clear();
+
+                foreach (var imovel in imoveis.Where(i => i != null))
+                    ListaRelatorio.Add(imovel!);
             }
             catch (Exception ex)
             {

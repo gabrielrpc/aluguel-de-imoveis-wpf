@@ -11,6 +11,7 @@
 
     <UserControl.Resources>
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <local:TelefoneFormatConverter x:Key="TelefoneFormatConverter" />
 
         <Style x:Key="LeftTabItemStyle" TargetType="TabItem">
             <Setter Property="Padding" Value="10"/>
@@ -623,6 +624,196 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </Border>
+            </TabItem>
+            
+            <TabItem Header="Relatório de Imóveis" Cursor="Hand">
+                <Border 
+                    Background="White"
+                    CornerRadius="8" 
+                    ClipToBounds="True"
+                    >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="4*" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0">
+                            <TextBlock Margin="20"
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                Text="Relatório de Imóveis"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Foreground="#333"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Margin="20">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <UniformGrid Columns="4" Grid.Row="0" VerticalAlignment="Center">
+                                        <ComboBox x:Name="ComboTipoImovelRel"
+                                           BorderThickness="0"
+                                           Padding="12"
+                                           Margin="0 0 0 10"
+                                           VerticalAlignment="Center"
+                                           FontSize="16"
+                                           ItemsSource="{Binding TiposImovel}"
+                                           SelectedItem="{Binding TipoSelecionadoRel}"  
+                                           />
+
+
+                                        <Border Background="#80c0ff" 
+                                             Margin="15 0 15 10"
+                                             Opacity="0.7"
+                                             CornerRadius="6"
+                                             >
+                                            <Grid>
+                                                <TextBox  x:Name="ValorAluguelMinRelTextBox"
+                                                    Background="Transparent"  
+                                                    BorderThickness="0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    Padding="12"
+                                                    Text="{Binding ValorAluguelMinTexto, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+
+                                                <TextBlock x:Name="ValorAluguelMinRelPlaceholderText"
+                                                    Text="Valor Mínimo"
+                                                    Foreground="Gray"
+                                                    FontSize="16"
+                                                    VerticalAlignment="Center"
+                                                    Padding="12"
+                                                    IsHitTestVisible="False"
+                                                    Visibility="{Binding ElementName=ValorAluguelMinRelTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                                    />
+                                            </Grid>
+                                        </Border>
+                                        
+                                        <Border Background="#80c0ff" 
+                                             Margin="0 0 15 10"
+                                             Opacity="0.7"
+                                             CornerRadius="6"
+                                             >
+                                            <Grid>
+                                                <TextBox  x:Name="ValorAluguelMaxRelTextBox"
+                                                     Background="Transparent"  
+                                                     BorderThickness="0"
+                                                     VerticalAlignment="Center"
+                                                     FontSize="16"
+                                                     Padding="12"
+                                                     Text="{Binding ValorAluguelMaxTexto, UpdateSourceTrigger=PropertyChanged}"
+                                                     />
+
+                                                <TextBlock x:Name="ValorAluguelMaxRelPlaceholderText"
+                                                     Text="Valor Máximo"
+                                                     Foreground="Gray"
+                                                     FontSize="16"
+                                                     VerticalAlignment="Center"
+                                                     Padding="12"
+                                                     IsHitTestVisible="False"
+                                                     Visibility="{Binding ElementName=ValorAluguelMaxRelTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                 
+                                                     />
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Background="#6a7eee"
+                                            Height="50"
+                                            CornerRadius="6"  
+                                            Margin="0 0 0 10"
+                                            >
+                                            <Button 
+                                                Background="Transparent"
+                                                Content="Filtrar"
+                                                Foreground="White"
+                                                FontSize="18"
+                                                BorderThickness="0"
+                                                FontWeight="Bold"
+                                                Cursor="Hand"
+                                                HorizontalAlignment="Stretch"
+                                                IsDefault="True"
+                                                Command="{Binding FiltrarRelatorioCommand}"
+                                                >
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="Transparent">
+                                                                        <ContentPresenter 
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            />
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </Border>
+                                    </UniformGrid>
+                                       
+
+                                    <UniformGrid Grid.Row="1" Columns="6" Background="#EEE">
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Proprietário" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Contato" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Telefone" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Titulo Imóvel" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Tipo" />
+                                        </Border>
+                                        <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                            <TextBlock HorizontalAlignment="Center" Text="Valor Aluguel" />
+                                        </Border>
+                                    </UniformGrid>
+
+                                    <ItemsControl Grid.Row="2" ItemsSource="{Binding ListaRelatorio}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <UniformGrid Columns="6">
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Usuario.Nome}" />
+                                                    </Border>
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Usuario.Email}" />
+                                                    </Border>
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Usuario.Telefone, Converter={StaticResource TelefoneFormatConverter}}" />
+                                                    </Border>
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Titulo}" />
+                                                    </Border>
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Tipo}" />
+                                                    </Border>
+                                                    <Border BorderBrush="Gray" BorderThickness="0.5" Padding="5">
+                                                        <TextBlock HorizontalAlignment="Center" Text="{Binding ValorAluguel, StringFormat=R$ {0:N2}}" />
+                                                    </Border>
+                                                </UniformGrid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
                             </ScrollViewer>
                         </Border>
                     </Grid>

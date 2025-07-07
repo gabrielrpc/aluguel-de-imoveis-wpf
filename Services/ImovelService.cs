@@ -1,9 +1,11 @@
-﻿using aluguel_de_imoveis_wpf.Communication.Response;
+﻿using aluguel_de_imoveis.Utils.Enums;
+using aluguel_de_imoveis_wpf.Communication.Response;
 using aluguel_de_imoveis_wpf.Model;
 using aluguel_de_imoveis_wpf.Security;
 using aluguel_de_imoveis_wpf.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection.Metadata;
@@ -22,9 +24,25 @@ namespace aluguel_de_imoveis_wpf.Services
             _httpClient.BaseAddress = new Uri(BaseUrl.Url);
         }
 
-        public async Task<List<Imovel?>> ListarImoveisDisponiveis()
+        public async Task<List<Imovel?>> ListarImoveisDisponiveis(TipoImovel? tipo = null, decimal? valorMin = null, decimal? valorMax = null, int? pagina = null)
         {
-            var response = await _httpClient.GetAsync($"imovel/listar-imoveis-disponiveis");
+            var queryParams = new List<string>();
+
+            if (tipo != null)
+                queryParams.Add($"Tipo={tipo}");
+
+            if (valorMin != null)
+                queryParams.Add($"ValorMin={valorMin.Value.ToString(CultureInfo.InvariantCulture)}");
+
+            if (valorMax != null)
+                queryParams.Add($"ValorMax={valorMax.Value.ToString(CultureInfo.InvariantCulture)}");
+
+            if (pagina != null)
+                queryParams.Add($"Pagina={pagina.Value.ToString(CultureInfo.InvariantCulture)}");
+
+            var queryString = queryParams.Count > 0 ? "?" + string.Join("&", queryParams) : "";
+
+            var response = await _httpClient.GetAsync($"imovel/listar-imoveis-disponiveis{queryString}");
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -44,7 +62,7 @@ namespace aluguel_de_imoveis_wpf.Services
                 }
                 catch (JsonException)
                 {
-                    throw new Exception("Erro inesperado ao listar os imvóveis.");
+                    throw new Exception("Erro inesperado ao listar os imóveis.");
                 }
             }
 
