@@ -36,7 +36,8 @@ aluguel-de-imoveis-wpf/
   │   ├── Response/           # Modelos de entrada de dados da API
   │   └── Wrapper/            # Modelos emcapsulados e personalizados para uso nos Requests/Responses
   ├── Converters/             # Tratamento para exibição/formatação de dados na aplicação
-  ├── Models/                 # Modelos utilizados na aplicação
+  ├── Model/                  # Modelos utilizados na aplicação
+  ├── Relatorios/             # Lógica para geração de relatórios
   ├── Security/               # Tratamento do token JWT
   ├── Services/               # Responsável por se comunicar com o backend
   ├── Utils/                  # Classes de Utilidade e Enums
