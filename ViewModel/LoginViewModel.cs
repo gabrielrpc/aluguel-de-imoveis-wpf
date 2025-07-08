@@ -54,6 +54,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             try
             {
                 var response = await _usuarioService.LoginAsync(Email, Senha);
+                if (response == null)
+                    throw new Exception("Falha no login. Verifique suas credenciais.");
+
                 TokenStorage.SaveToken(response.Token);
                 _abrirPainel();
             }
@@ -63,9 +66,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public event PropertyChangedEventHandler? PropertyChanged = delegate { };
 
-        protected void OnPropertyChanged([CallerMemberName] string nome = null)
+        protected void OnPropertyChanged([CallerMemberName] string nome = null!)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nome));
         }

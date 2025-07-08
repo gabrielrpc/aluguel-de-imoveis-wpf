@@ -145,5 +145,58 @@ namespace aluguel_de_imoveis_wpf.Services
             }
             return "success";
         }
+
+
+        public async Task<string> AtualizarImovel(Imovel imovel, Guid imovelId)
+        {
+            var json = JsonSerializer.Serialize(imovel);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"imovel/atualizar/{imovelId}", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+
+                try
+                {
+                    var jsonDocument = JsonDocument.Parse(responseContent);
+                    var root = jsonDocument.RootElement;
+
+                    string mensagem;
+                    if (root.ValueKind == JsonValueKind.Object)
+                    {
+                        if (root.TryGetProperty("erros", out var errosProp) && errosProp.ValueKind == JsonValueKind.Array)
+                        {
+                            var erros = errosProp.Deserialize<string[]>();
+                            mensagem = erros?.Length > 0 ? string.Join("\n- ", erros) : "Falha no cadastro. Tente novamente.";
+                            mensagem = $"- {mensagem}";
+                        }
+                        else if (root.TryGetProperty("erro", out var erroProp) && erroProp.ValueKind == JsonValueKind.String)
+                        {
+                            mensagem = $"- {erroProp.GetString()}";
+                        }
+                        else
+                        {
+                            mensagem = "Falha ao atualizar anuncio. Tente novamente.";
+                        }
+                    }
+                    else if (root.ValueKind == JsonValueKind.String)
+                    {
+                        mensagem = $"- {root.GetString()}";
+                    }
+                    else
+                    {
+                        mensagem = "Falha ao atualizar anuncio. Tente novamente.";
+                    }
+
+                    throw new Exception(mensagem);
+                }
+                catch (JsonException)
+                {
+                    throw new Exception("Erro inesperado ao atualizar o anuncio, Tente novamente mais tarde!");
+                }
+            }
+            return "Ok";
+        }
     }
 }

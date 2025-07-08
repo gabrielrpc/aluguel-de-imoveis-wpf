@@ -8,7 +8,9 @@ namespace aluguel_de_imoveis_wpf.View
         public PainelView(MainWindow mainWindow)
         {
             InitializeComponent();
-            DataContext = new PainelViewModel((imovel, func) => mainWindow.AbrirDetalhes(imovel, func), mainWindow.AbrirLogin);
+            DataContext = new PainelViewModel((imovel, func) => mainWindow.AbrirDetalhes(imovel, func),
+                (imovel, func) => mainWindow.AbrirEditarAnuncio(imovel, func),
+                mainWindow.AbrirLogin);
         }
     }
 }

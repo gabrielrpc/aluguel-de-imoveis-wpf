@@ -19,6 +19,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         private readonly LocacaoService _locacaoService;
         private readonly Action _abrirLogin;
         private readonly Action<Imovel, Func<Task>> _abrirDetalhes;
+        private readonly Action<Imovel, Func<Task>> _abrirEditarAnuncio;
 
         public ObservableCollection<Imovel> ListaImoveisDisponiveis { get; } = new();
         public ObservableCollection<ListarLocacaoResponseJson> ListaMinhasLocacoes { get; } = new();
@@ -48,18 +49,18 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public ICommand LogoutCommand { get; }
         public ICommand AbrirDetalhesCommand { get; }
         public ICommand FiltrarRelatorioCommand { get; }
+        public ICommand AbrirEditarAnuncioCommand { get;  }
 
         public ICommand ProximaCommand { get; }
         public ICommand AnteriorCommand { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        public PainelViewModel(Action<Imovel, Func<Task>> abrirDetalhes, Action abrirLogin)
+        public PainelViewModel(Action<Imovel, Func<Task>> abrirDetalhes, Action<Imovel, Func<Task>> abrirEditarAnuncio, Action abrirLogin)
         {
             _imovelService = new ImovelService();
             _locacaoService = new LocacaoService();
             _abrirLogin = abrirLogin;
             _abrirDetalhes = abrirDetalhes;
+            _abrirEditarAnuncio = abrirEditarAnuncio;
 
             CadastrarImovelCommand = new RelayCommand(async (_) => await CadastrarImovelAsync());
             LogoutCommand = new RelayCommand(_ => RealizarLogout());
@@ -67,6 +68,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             FiltrarRelatorioCommand = new RelayCommand(async (_) => await FiltrarRelatorios());
             ProximaCommand = new RelayCommand(async (_) => await ProximaPaginaAsync());
             AnteriorCommand = new RelayCommand(async (_) => await PaginaAnteriorAsync());
+            AbrirEditarAnuncioCommand = new RelayCommand<Imovel>(AbrirEditarAnuncio);
 
             _ = CarregarDados();
         }
@@ -163,7 +165,6 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         private int _paginaAtual = 1;
         private const int _itensPorPagina = 10;
         private bool _podeAvancar = true;
-        private bool _podeRetornar = false;
 
         public bool PodeAvancar
         {
@@ -403,6 +404,11 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             _abrirDetalhes(imovel, CarregarDados);
         }
 
+        private void AbrirEditarAnuncio(Imovel imovel)
+        {
+            _abrirEditarAnuncio(imovel, CarregarDados);
+        }
+
         private string TratarDiasEmAndamento(int atual)
         {
             if (atual < 0) return $"Início em {Math.Abs(atual)} dias";
@@ -416,7 +422,8 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             else return $"Faltam {resto} dias";
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string nome = null)
+        public event PropertyChangedEventHandler? PropertyChanged = delegate { };
+        protected void OnPropertyChanged([CallerMemberName] string nome = null!)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nome));
         }

@@ -1,0 +1,387 @@
+﻿<Page x:Class="aluguel_de_imoveis_wpf.View.EditarAnuncioView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:aluguel_de_imoveis_wpf.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="#6a7eee"
+      Title="EditarAnuncioView">
+
+    <Page.Resources>
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="30" ShadowDepth="1" Opacity="0.4"/>
+            </Grid.Effect>
+        
+        <Border Background="White"
+             CornerRadius="8" 
+             ClipToBounds="True"
+             >
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Margin="20 10" >
+                    <TextBlock >
+                        <Hyperlink TextDecorations="None" 
+                                   FontWeight="DemiBold" 
+                                   Foreground="#6a7eee" 
+                                   Cursor="Hand" 
+                                   FontSize="18"
+                                   Command="{Binding VoltarCommand}">
+                            <Run Text="Voltar" />
+                        </Hyperlink>
+                    </TextBlock>
+                </Border>
+
+                <Border Grid.Row="1" VerticalAlignment="Bottom" Margin="0 20">
+                    <TextBlock FontSize="24" 
+                         FontWeight="Bold" 
+                         Text="Alterar Dados do Anúncio"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Foreground="#333"/>
+                </Border>
+
+                <StackPanel Grid.Row="2" VerticalAlignment="Center">
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="20"
+                             Grid.Column="0" 
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Right" 
+                             Width="Auto" 
+                             MaxWidth="520"
+                             >
+
+
+                            <Border
+                                Background="#80c0ff" 
+                                Margin="0 0 0 15"
+                                Opacity="0.7"
+                                CornerRadius="6"
+                                >
+                                <Grid>
+                                    <TextBox x:Name="TituloTextBox"
+                                          Background="Transparent"  
+                                          BorderThickness="0"
+                                          Padding="12"
+                                          VerticalAlignment="Center"
+                                          FontSize="16"
+                                          TextWrapping="Wrap"
+                                          AcceptsReturn="True"
+                                          MinHeight="45"
+                                          MaxHeight="70"
+                                          Width="320"
+                                          Text="{Binding Titulo}"
+                                          />
+
+                                    <TextBlock x:Name="TituloPlaceholderText"
+                                          Text="Título"
+                                          Foreground="Gray"
+                                          FontSize="16"
+                                          VerticalAlignment="Center"
+                                          Padding="12"
+                                          IsHitTestVisible="False"
+                                          Visibility="{Binding ElementName=TituloTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                          />
+                                        </Grid>
+                            </Border>
+
+                            <Border Background="#80c0ff" 
+                                  Margin="0 0 0 15"
+                                  Opacity="0.7"
+                                  CornerRadius="6"
+                                  >
+                                <Grid>
+                                    <TextBox  x:Name="DescricaoTextBox"
+                                          Background="Transparent"  
+                                          BorderThickness="0"
+                                          VerticalAlignment="Center"
+                                          FontSize="16"
+                                          Padding="12"
+                                          TextWrapping="Wrap"
+                                          AcceptsReturn="True"
+                                          MinHeight="45"
+                                          MaxHeight="200"
+                                          Width="320"
+                                          Text="{Binding Descricao}"
+                                          />
+
+                                    <TextBlock x:Name="DescricaoPlaceholderText"
+                                          Text="Descrição"
+                                          Foreground="Gray"
+                                          FontSize="16"
+                                          VerticalAlignment="Center"
+                                          Padding="12"
+                                          IsHitTestVisible="False"
+                                          Visibility="{Binding ElementName=DescricaoTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                          />
+                                </Grid>
+                            </Border>
+
+                            <Border Background="#80c0ff" 
+                                  Margin="0 0 0 15"
+                                  Opacity="0.7"
+                                  CornerRadius="6"
+                                  >
+                                <Grid>
+                                    <TextBox  x:Name="ValorAluguelTextBox"
+                                          Background="Transparent"  
+                                          BorderThickness="0"
+                                          VerticalAlignment="Center"
+                                          FontSize="16"
+                                          Padding="12"
+                                          Text="{Binding ValorAluguelTexto, UpdateSourceTrigger=PropertyChanged}"
+                                    />
+
+                                    <TextBlock x:Name="ValorAluguelPlaceholderText"
+                                          Text="Valor Aluguel"
+                                          Foreground="Gray"
+                                          FontSize="16"
+                                          VerticalAlignment="Center"
+                                          Padding="12"
+                                          IsHitTestVisible="False"
+                                          Visibility="{Binding ElementName=ValorAluguelTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+  
+                                    />
+                                </Grid>
+                            </Border>
+
+                            <Grid Margin="0 0 0 10">
+                                <ComboBox x:Name="ComboTipoImovel"
+                                    BorderThickness="0"
+                                    Padding="12"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    ItemsSource="{Binding TiposImovel}"
+                                    SelectedItem="{Binding TipoSelecionado}"  />
+
+                            </Grid>
+
+                            <Border Background="#80c0ff" 
+                                Margin="0 0 0 15"
+                                Opacity="0.7"
+                                CornerRadius="6"
+                                >
+                                <Grid>
+                                    <TextBox x:Name="CepTextBox"
+                                         Background="Transparent"  
+                                         BorderThickness="0"
+                                         VerticalAlignment="Center"
+                                         FontSize="16"
+                                         Padding="12"
+                                         Text="{Binding Cep, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock x:Name="CepPlaceholderText"
+                                          Text="CEP"
+                                          Foreground="Gray"
+                                          FontSize="16"
+                                          VerticalAlignment="Center"
+                                          Padding="12"
+                                          IsHitTestVisible="False"
+                                          Visibility="{Binding ElementName=CepTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+  
+                                  />
+                                </Grid>
+                            </Border>
+
+
+                        </StackPanel>
+
+                        <StackPanel Margin="20"
+                             Grid.Column="1" 
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Left" 
+                             Width="Auto" 
+                             MaxWidth="520"
+                             >  
+
+                            <Border Background="#80c0ff" 
+                                Margin="0 0 0 15"
+                                Opacity="0.7"
+                                CornerRadius="6"
+                                >
+                                <Grid>
+                                    <TextBox x:Name="LogradouroTextBox"
+                                     Background="Transparent"  
+                                     BorderThickness="0"
+                                     VerticalAlignment="Center"
+                                     FontSize="16"
+                                     Padding="12"
+                                     Text="{Binding Logradouro}"/>
+
+                                    <TextBlock x:Name="LogradouroPlaceholderText"
+                                      Text="Logradouro"
+                                      Foreground="Gray"
+                                      FontSize="16"
+                                      VerticalAlignment="Center"
+                                      Padding="12"
+                                      IsHitTestVisible="False"
+                                      Visibility="{Binding ElementName=LogradouroTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                  />
+                                </Grid>
+                            </Border>
+
+                            <Border
+                              Background="#80c0ff" 
+                              Margin="0 0 0 15"
+                              Opacity="0.7"
+                              CornerRadius="6"
+                              >
+                                <Grid>
+                                    <TextBox x:Name="NumeroTextBox"
+                                          Background="Transparent"  
+                                          BorderThickness="0"
+                                          Padding="12"
+                                          VerticalAlignment="Center"
+                                          FontSize="16"
+                                          TextWrapping="Wrap"
+                                          AcceptsReturn="True"
+                                          MinHeight="45"
+                                          MaxHeight="70"
+                                          Width="320"
+                                          Text="{Binding NumeroTexto, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock x:Name="NumeroPlaceholderText"
+                                      Text="Número"
+                                      Foreground="Gray"
+                                      FontSize="16"
+                                      VerticalAlignment="Center"
+                                      Padding="12"
+                                      IsHitTestVisible="False"
+                                      Visibility="{Binding ElementName=NumeroTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                      />
+                                </Grid>
+                            </Border>
+
+                            <Border Background="#80c0ff" 
+                                  Margin="0 0 0 15"
+                                  Opacity="0.7"
+                                  CornerRadius="6"
+                                  >
+                                <Grid>
+                                    <TextBox  x:Name="BairroTextBox"
+                                      Background="Transparent"  
+                                      BorderThickness="0"
+                                      VerticalAlignment="Center"
+                                      FontSize="16"
+                                      Padding="12"
+                                      TextWrapping="Wrap"
+                                      AcceptsReturn="True"
+                                      MinHeight="45"
+                                      MaxHeight="200"
+                                      Width="320"
+                                      Text="{Binding Bairro}"/>
+
+                                    <TextBlock x:Name="BairroPlaceholderText"
+                                      Text="Bairro"
+                                      Foreground="Gray"
+                                      FontSize="16"
+                                      VerticalAlignment="Center"
+                                      Padding="12"
+                                      IsHitTestVisible="False"
+                                      Visibility="{Binding ElementName=BairroTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                     />
+                                </Grid>
+                            </Border>
+
+                            <Border Background="#80c0ff" 
+                                 Margin="0 0 0 15"
+                                 Opacity="0.7"
+                                 CornerRadius="6"
+                                 >
+                                <Grid>
+                                    <TextBox  x:Name="CidadeTextBox"
+                                          Background="Transparent"  
+                                          BorderThickness="0"
+                                          VerticalAlignment="Center"
+                                          FontSize="16"
+                                          Padding="12"
+                                          Text="{Binding Cidade}"/>
+
+                                    <TextBlock x:Name="CidadePlaceholderText"
+                                          Text="Cidade"
+                                          Foreground="Gray"
+                                          FontSize="16"
+                                          VerticalAlignment="Center"
+                                          Padding="12"
+                                          IsHitTestVisible="False"
+                                          Visibility="{Binding ElementName=CidadeTextBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+  
+                                          />
+                                </Grid>
+                            </Border>
+
+                            <Grid Margin="0 0 0 10">
+                                <ComboBox x:Name="ComboUf"
+                                    BorderThickness="0"
+                                    Padding="12"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    ItemsSource="{Binding UfEnum}"
+                                    SelectedItem="{Binding UfSelecionado}"  />
+
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Border  Grid.Row="3"
+                     VerticalAlignment="Top"
+                     Background="#6a7eee"
+                     Height="50"
+                     Width="350"
+                     CornerRadius="6" 
+                     Margin="0 20"
+                     >
+                    <Button 
+                         Background="Transparent"
+                         Content="Confirmar"
+                         Foreground="White"
+                         FontSize="18"
+                         BorderThickness="0"
+                         FontWeight="Bold"
+                         Cursor="Hand"
+                         HorizontalAlignment="Stretch"
+                         Command="{Binding EditarImovelCommand}"
+                         IsDefault="True"
+                         >
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="Transparent">
+                                                <ContentPresenter 
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

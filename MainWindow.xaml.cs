@@ -26,6 +26,11 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new DetalhesImovelView(this, imovel, atualizarPainel));
     }
 
+    public void AbrirEditarAnuncio(Imovel imovel, Func<Task> atualizarPainel)
+    {
+        MainFrame.Navigate(new EditarAnuncioView(this, imovel, atualizarPainel));
+    }
+
     public void AbrirRegistrar()
     {
         MainContent.Content = new RegistrarView(this);

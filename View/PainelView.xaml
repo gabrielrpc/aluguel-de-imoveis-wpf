@@ -11,6 +11,7 @@
 
     <UserControl.Resources>
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <local:UsuarioVisibilidadeInversaConverter x:Key="UsuarioVisibilidadeInversaConverter" />
         <local:TelefoneFormatConverter x:Key="TelefoneFormatConverter" />
 
         <Style x:Key="LeftTabItemStyle" TargetType="TabItem">
@@ -113,7 +114,29 @@
                                                     <ColumnDefinition Width="140" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <StackPanel Grid.Column="0">
+                                                
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="15" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock 
+                                                    TextAlignment="Right" 
+                                                    FontSize="14"
+                                                    Grid.Column="1"
+                                                    Margin="0 0 10 0" 
+                                                    Visibility="{Binding UsuarioId, Converter={StaticResource UsuarioVisibilidadeInversaConverter}}"
+                                                    >
+                                                    <Hyperlink TextDecorations="None" 
+                                                        Foreground="Orange" 
+                                                        Cursor="Hand"
+                                                        Command="{Binding DataContext.AbrirEditarAnuncioCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                        CommandParameter="{Binding}">
+                                                        <Run Text="Editar" />
+                                                    </Hyperlink>
+                                                </TextBlock>
+
+                                                <StackPanel Grid.Row="1" Grid.Column="0">
 
                                                     <Image 
                                                         Source="/Assets/imagem-unknow.jpg"
@@ -126,7 +149,7 @@
 
                                                 </StackPanel>
 
-                                                <StackPanel Margin="10" Grid.Column="1">
+                                                <StackPanel Margin="10" Grid.Row="1" Grid.Column="1">
                                                     <TextBlock Text="{Binding Titulo}" 
                                                         FontWeight="Bold" 
                                                         TextWrapping="Wrap" 
