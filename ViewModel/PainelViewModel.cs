@@ -1,12 +1,17 @@
 ﻿using aluguel_de_imoveis.Utils.Enums;
 using aluguel_de_imoveis_wpf.Communication.Response;
 using aluguel_de_imoveis_wpf.Model;
+using aluguel_de_imoveis_wpf.Relatorios;
 using aluguel_de_imoveis_wpf.Security;
 using aluguel_de_imoveis_wpf.Services;
 using aluguel_de_imoveis_wpf.Utils;
 using aluguel_de_imoveis_wpf.Utils.Enums;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -362,6 +367,17 @@ namespace aluguel_de_imoveis_wpf.ViewModel
 
 
                 var imoveis = await _imovelService.ListarImoveisDisponiveis(tipo, valorMin, valorMax);
+
+                QuestPDF.Settings.License = LicenseType.Community;
+                var relatorio = new RelatorioDeImoveisDisponiveis(imoveis);
+                relatorio.GeneratePdf("relatorio.pdf");
+                var caminho = Path.Combine(Directory.GetCurrentDirectory(), "relatorio.pdf");
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = caminho,
+                    UseShellExecute = true
+                });
+
                 ListaRelatorio.Clear();
 
                 foreach (var imovel in imoveis.Where(i => i != null))

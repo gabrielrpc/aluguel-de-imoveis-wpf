@@ -2,7 +2,6 @@
 using aluguel_de_imoveis_wpf.View;
 using aluguel_de_imoveis_wpf.View.Assets;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace aluguel_de_imoveis_wpf;
 

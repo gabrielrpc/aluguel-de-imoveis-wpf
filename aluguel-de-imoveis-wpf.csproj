@@ -10,23 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-    <Page Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="View\TelefoneConverter.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Assets\imagem-unknow.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FastReport.OpenSource" Version="2025.2.0" />
-    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2025.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +40,10 @@
 
   <ItemGroup>
     <Folder Include="Assets\Relatorios\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="QuestPDF" Version="2025.7.0" />
   </ItemGroup>
 
 </Project>
