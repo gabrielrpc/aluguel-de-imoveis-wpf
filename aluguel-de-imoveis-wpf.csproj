@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="FastReport.OpenSource" Version="2025.2.0" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2025.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +48,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Relatorios\" />
   </ItemGroup>
 
 </Project>

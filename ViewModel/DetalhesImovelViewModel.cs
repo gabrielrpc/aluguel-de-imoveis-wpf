@@ -11,6 +11,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
     public class DetalhesImovelViewModel : INotifyPropertyChanged
     {
         private readonly LocacaoService _locacaoService;
+        private readonly ImovelService _imovelService;
         private readonly Action _voltarParaPainel;
         private readonly Func<Task> _atualizarPainel;
 
@@ -19,15 +20,21 @@ namespace aluguel_de_imoveis_wpf.ViewModel
 
         public Imovel Imovel { get; }
 
+        public ICommand RegistrarLocacaoCommand { get; }
+        public ICommand VoltarCommand { get; }
+        public ICommand RemoverAnuncioCommand { get; }
+
         public DetalhesImovelViewModel(Imovel imovel, Action voltarParaPainel, Func<Task> atualizarPainel)
         {
             _locacaoService = new LocacaoService();
+            _imovelService = new ImovelService();
             _voltarParaPainel = voltarParaPainel;
             _atualizarPainel = atualizarPainel;
 
             Imovel = imovel;
-            RegistrarCommand = new RelayCommand(async (_) => await RegistrarAsync());
+            RegistrarLocacaoCommand = new RelayCommand(async (_) => await RegistrarLocacaoAsync());
             VoltarCommand = new RelayCommand(_ => _voltarParaPainel());
+            RemoverAnuncioCommand = new RelayCommand(async _ => await RemoverAnuncio());
         }
 
         public DateTime? DataInicio
@@ -42,10 +49,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             set { _dataFim = value; OnPropertyChanged(); }
         }
 
-        public ICommand RegistrarCommand { get; }
-        public ICommand VoltarCommand { get; }
-
-        private async Task RegistrarAsync()
+        private async Task RegistrarLocacaoAsync()
         {
             if (DataInicio == null || DataFim == null)
             {
@@ -69,8 +73,29 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        private void OnPropertyChanged([CallerMemberName] string propName = null)
+        public async Task RemoverAnuncio()
+        {
+            if (MessageBox.Show("Deseja realmente remover o anuncio?", "Confirmação", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    await _imovelService.RemoverImovel(Imovel.Id);
+
+                    await _atualizarPainel();
+
+                    MessageBox.Show("Anuncio removido com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    _voltarParaPainel();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged = delegate { };
+        private void OnPropertyChanged([CallerMemberName] string? propName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }

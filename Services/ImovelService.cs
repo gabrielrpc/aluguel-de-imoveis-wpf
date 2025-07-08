@@ -1,9 +1,11 @@
 ﻿using aluguel_de_imoveis.Utils.Enums;
 using aluguel_de_imoveis_wpf.Model;
+using aluguel_de_imoveis_wpf.Security;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 
 namespace aluguel_de_imoveis_wpf.Services
 {
@@ -115,6 +117,33 @@ namespace aluguel_de_imoveis_wpf.Services
                 }                
             }
             return "created";
+        }
+
+        public async Task<string> RemoverImovel(Guid imovelId)
+        {
+            var response = await _httpClient.DeleteAsync($"imovel/{imovelId}");
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var errorResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseContent);
+
+                    if (errorResponse != null && errorResponse.ContainsKey("erro"))
+                    {
+                        var mensagem = errorResponse["erro"];
+                        throw new Exception(mensagem);
+                    }
+
+                    throw new Exception("Falha ao remover o anuncio!");
+                }
+                catch (JsonException)
+                {
+                    throw new Exception("Falha ao remover o anuncio, tente novamente mais tarde!");
+                }
+            }
+            return "success";
         }
     }
 }

@@ -7,6 +7,7 @@
 
     <Page.Resources>
         <local:UsuarioVisibilidadeConverter x:Key="UsuarioVisibilidadeConverter" />
+        <local:UsuarioVisibilidadeInversaConverter x:Key="UsuarioVisibilidadeInversaConverter" />
         <local:TelefoneFormatConverter x:Key="TelefoneFormatConverter" />
     </Page.Resources>
     
@@ -170,7 +171,7 @@
                                             BorderThickness="0"
                                             FontWeight="Bold"
                                             Cursor="Hand"
-                                            Command="{Binding RegistrarCommand}">
+                                            Command="{Binding RegistrarLocacaoCommand}">
                                             <Button.Style>
                                                 <Style TargetType="Button">
                                                     <Setter Property="Template">
@@ -188,8 +189,81 @@
                                                 </Style>
                                             </Button.Style>
                                         </Button>
-                                        
-                                     </Border >
+
+                                    </Border >
+                                </StackPanel>
+
+
+                                <StackPanel Visibility="{Binding Imovel.UsuarioId, Converter={StaticResource UsuarioVisibilidadeInversaConverter}}" >
+
+                                    <UniformGrid Columns="2">
+                                        <Border  VerticalAlignment="Center"
+                                            Background="Red"
+                                            Height="45"
+                                            CornerRadius="6" 
+                                            Margin="0 0 5 0"
+                                            >
+                                            <Button Content="Excluir Anúncio"
+                                                Background="Transparent"
+                                                Foreground="White"
+                                                FontSize="16"
+                                                BorderThickness="0"
+                                                FontWeight="Bold"
+                                                Cursor="Hand"
+                                                Command="{Binding RemoverAnuncioCommand}"
+                                                >
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="Transparent">
+                                                                        <ContentPresenter 
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    />
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </Border >
+
+                                        <Border  VerticalAlignment="Center"
+                                            Background="Orange"
+                                            Height="45"
+                                            CornerRadius="6" 
+                                            Margin="5 0 0 0"
+                                            >
+                                            <Button Content="Editar Anúncio"
+                                             Background="Transparent"
+                                             Foreground="White"
+                                             FontSize="16"
+                                             BorderThickness="0"
+                                             FontWeight="Bold"
+                                             Cursor="Hand"
+                                             >
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="Transparent">
+                                                                    <ContentPresenter 
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Center"
+                                                                         />
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        </Border >
+                                    </UniformGrid>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
