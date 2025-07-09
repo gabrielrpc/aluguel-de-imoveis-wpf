@@ -8,9 +8,11 @@ Aplicação Desktop desenvolvida em WPF para consumo da API de aluguel de imóve
 - Cadastros de usuários
 - Listagem de imóveis com paginação
 - Criação de imóveis
+- Edição dos anúncios de imoveis
+- exclusão dos anúncios de imoveis
 - Exibição dos detalhes de imóveis
 - Registro de Aluguel
-- Exibição de relatórios com filtros
+- Exibição de relatórios com filtros e exibição em pdf
 
 ## Requisitos
 
@@ -23,9 +25,15 @@ Aplicação Desktop desenvolvida em WPF para consumo da API de aluguel de imóve
    git clone repo-url
    cd aluguel-de-imoveis-wpf
 ```
-2. **Ajuste a porta do endpoint:** Ao abrir a aplicação, vá até a pasta 'Service/BaseUrl.cs' e ajuste a URL base do endpoint.
+
+2. **Restaure as dependências:**
+```bash
+   dotnet restore
+```
+
+3. **Ajuste a porta do endpoint:** Ao abrir a aplicação, vá até a pasta 'Service/BaseUrl.cs' e ajuste a URL base do endpoint.
  
-3. **Execute a aplicação**.
+4. **Execute a aplicação**.
 
 ## Estrutura do Projeto
 ```bash
@@ -46,3 +54,8 @@ aluguel-de-imoveis-wpf/
   ├── ViewModel               # Classes para tratar dados da View
   └── MainWindow.xaml.cs      # Contém as injeções de dados para as páginas
 ```
+
+## Principais Dependências
+
+- QuestPDF
+---
