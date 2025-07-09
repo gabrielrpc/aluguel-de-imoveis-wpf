@@ -93,19 +93,19 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         public string Logradouro
         {
             get => _logradouro;
-            set { _logradouro = value; OnPropertyChanged(); }
+            set { _logradouro = new string(value.Where(char.IsLetter).ToArray()); OnPropertyChanged(); }
         }
 
         public string Bairro
         {
             get => _bairro;
-            set { _bairro = value; OnPropertyChanged(); }
+            set { _bairro = new string(value.Where(char.IsLetter).ToArray()); OnPropertyChanged(); }
         }
 
         public string Cidade
         {
             get => _cidade;
-            set { _cidade = value; OnPropertyChanged(); }
+            set { _cidade = new string(value.Where(char.IsLetter).ToArray()); OnPropertyChanged(); }
         }
 
         public string Cep
