@@ -103,12 +103,12 @@ namespace aluguel_de_imoveis_wpf.ViewModel
                 }
 
                 await _usuarioService.RegistrarAsync(Nome, Email, Cpf, Telefone, Senha);
-                MessageBox.Show("Usuário registrado com sucesso!");
+                MessageBox.Show("Usuário registrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
                 _abrirLogin();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

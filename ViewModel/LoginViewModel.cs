@@ -62,7 +62,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

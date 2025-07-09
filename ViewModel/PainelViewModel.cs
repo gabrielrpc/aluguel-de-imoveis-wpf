@@ -204,11 +204,9 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             {
                 _paginaAtual = proximaPagina;
                 AtualizarLista(imoveis);
-            }
-
-            else
+            } else
             {
-                MessageBox.Show("Não há mais imóveis disponíveis para exibição.");
+                MessageBox.Show("Não há mais imóveis disponíveis para exibição.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
                 PodeAvancar = false;
             }
 
@@ -267,7 +265,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -287,7 +285,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -327,14 +325,14 @@ namespace aluguel_de_imoveis_wpf.ViewModel
                 };
 
                 await _imovelService.CadastrarImovel(novoImovel);
-                MessageBox.Show("Imóvel cadastrado com sucesso!");
+                MessageBox.Show("Imóvel cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 LimparCampos();
                 await CarregarImoveisAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -385,7 +383,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

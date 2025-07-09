@@ -53,7 +53,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
         {
             if (DataInicio == null || DataFim == null)
             {
-                MessageBox.Show("Selecione uma data de início e fim válidas.");
+                MessageBox.Show("Selecione uma data de início e fim válidas.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace aluguel_de_imoveis_wpf.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Ocorreu um erro!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
